@@ -11,10 +11,11 @@
 </head>
 
 <body>
-    <h1>Books4U</h1>
-    <form action="">
-        <input type="text">
-        <button>Search</button>
+    <h1>Books 4U</h1>
+    <form action='submit' class="search-form js-form" >
+        <input type="text" class="search-field" placeholder="Search Books" required>
+        <button class="text-search">Search</button>
+        <button class="voice-search">Speech</button>
     </form>
 
     <h3>Top Popular books of the month</h3>
@@ -30,6 +31,9 @@
         <li>...</li>
         <li>...</li>
     </ul>
+    <div class="js-results">
+
+    </div>
 
 
 
@@ -37,7 +41,9 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous">
     </script>
-    <script src="index.js"></script>
+    <script src="model.js"></script>
+    <script src="view.js"></script>
+    <script src="controller.js"></script>
 </body>
 
 </html>
