@@ -19,7 +19,7 @@ function getBooksFromAPI(searchTerm, callback) {
 
 function displaySearchData(data) {
     const results = data.items.map((item, index) => renderBooks(item));
-    $('.js-results').html(results);
+    $('.js-results').html(results);    
 }
 
 function watchSubmit() {
