@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+}
+
+.separator {
+    background: black;
+    height: 2px;
+}
+
+form,
+h1,
+h3,
+ul,
+li,
+.results {
+    text-align: center;
+    margin: 25px 125px;    
+    list-style-type: none;
+}

@@ -5,7 +5,7 @@ const GOOGLE_BOOKS_API_URL = "https://www.googleapis.com/books/v1/volumes";
 function getBooksFromAPI(searchTerm, callback) {
     const settings = {
         url: GOOGLE_BOOKS_API_URL,
-        data: {            
+        data: {
             maxResults: 10,
             q: searchTerm
         },
@@ -19,7 +19,7 @@ function getBooksFromAPI(searchTerm, callback) {
 
 function displaySearchData(data) {
     const results = data.items.map((item, index) => renderBooks(item));
-    $('.js-results').html(results);    
+    $('.js-results').html(results);
 }
 
 function watchSubmit() {
@@ -52,7 +52,7 @@ function startDictation() {
             let results = e.results[0][0].transcript;
             $('.search-field').val(results);
             recognition.stop();
-            getBooksFromAPI(results, displaySearchData)            
+            getBooksFromAPI(results, displaySearchData)
         };
 
         recognition.onerror = function (e) {
