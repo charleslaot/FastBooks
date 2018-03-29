@@ -1,35 +1,79 @@
 'use strict'
 
 const GOOGLE_BOOKS_API_URL = "https://www.googleapis.com/books/v1/volumes";
+const NYT_API_URL = "https://api.nytimes.com/svc/books/v3/lists.json?api-key=ecb23c2aa6254b85b8623e1916c960f3";
 
-function getBooksFromAPI(searchTerm, callback) {
+// ajax call
+function getBooksFromAPI(apiURL, searchTerm, category, callback) {
     const settings = {
-        url: GOOGLE_BOOKS_API_URL,
+        url: apiURL,
         data: {
             maxResults: 10,
-            q: searchTerm
+            printType: "books",
+            q: category + ":" + searchTerm
         },
         dataType: 'json',
         type: 'GET',
         success: callback
     };
-
     $.ajax(settings);
 }
 
+function getBestSellerList(apiURL, listName, callback) {
+    const settings = {
+        url: apiURL,
+        data: {            
+            list: listName
+        },
+        dataType: 'json',
+        type: 'GET',
+        success: callback
+    };
+    $.ajax(settings);
+}
+
+// Passing the results to HTML
 function displaySearchData(data) {
     const results = data.items.map((item, index) => renderBooks(item));
     $('.js-results').html(results);
 }
+function displayBestSellerData(data){
+    
+    const results = data.results.map((item, index) => renderBestSellers(item));
+    $('.js-results').html(results);
+}
 
+// On submit
 function watchSubmit() {
     $('.js-form').submit(event => {
         event.preventDefault();
+        let category = $("option:checked").val();
         let query = $(event.currentTarget).find('.search-field').val();
-        getBooksFromAPI(query, displaySearchData);
+        if (category === "bestSeller") {
+            let subCategory = $(".bestSeller option:checked").val();
+            getBestSellerList(NYT_API_URL, subCategory, displayBestSellerData);
+        } else {                       
+            getBooksFromAPI(GOOGLE_BOOKS_API_URL, query, category, displaySearchData);
+        }
     });
 }
 
+// Best Seller list toggle menu
+function selectBestSellers() {
+    $('.selectParam').change(function () {
+        if ($(".selectParam option:selected").text() === "Best Seller") {
+            $('form input').toggle();
+            $('form .bestSeller').toggle();
+            $('form .voice-search').toggle();
+        } else {
+            $('form input').show();
+            $('form .voice-search').show();
+            $('form .bestSeller').hide();
+        }
+    });
+}
+
+// Speech Functionality
 function speechRecognition() {
     $("form").on('click', '.voice-search', function (event) {
         event.preventDefault();
@@ -63,5 +107,7 @@ function startDictation() {
     }
 }
 
+// When page finish loading
 $(watchSubmit());
 $(speechRecognition());
+$(selectBestSellers());

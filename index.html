@@ -7,31 +7,37 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://use.fontawesome.com/fbeba145c2.js"></script>
     <link rel="shortcut icon" href="https://image.ibb.co/hmH2QS/cbii9_s0z4d_0.png" type="image/x-icon">
-    <link rel="stylesheet" href="index.css">    
-    <title>Bookflix</title>
+    <link rel="stylesheet" href="index.css">
+    <title>BooksAPI</title>
 </head>
 
 <body>
-    <h1>Bookflix</h1>
-    <form action='submit' class="search-form js-form">
-        <input type="text" class="search-field" placeholder="Search Books" required>
+    <h1>BooksAPI</h1>
+    <form action='submit' class="search-form js-form" multiple=true>
+        <select class="selectParam" name="selectParam">
+            <option class="js-byAll" value="all" selected>All</option>
+            <option class="js-byTitle" value="title">Title</option>
+            <option class="js-byAuthor" value="author">Author</option>
+            <option class="js-byGenre" value="genre">Genre</option>
+            <option class="js-byPublisher" value="publisher">Publisher</option>
+            <option class="js-byBestSeller" value="bestSeller">Best Seller</option>
+        </select>
+        <select class="bestSeller" name="bestSeller" hidden>
+            <option class="js-businnes" value="business-books" selected>Businnes</option>
+            <option class="js-science" value="science">Science</option>
+            <option class="js-fiction" value="combined-print-and-e-book-fiction">Fiction</option>
+            <option class="js-non-fiction" value="combined-print-and-e-book-nonfiction">Non fiction</option>
+            <option class="js-sport-fitness" value="sports">Sport & fitness</option>
+            <option class="js-children" value="childrens-middle-grade-hardcover">Children</option>
+            <option class="js-young-adult" value="young-adult-hardcover">Young adult</option>
+            <option class="js-audiobooks" value="audio-fiction">Audiobooks Fiction</option>
+            <option class="js-audiobooks" value="audio-nonfiction">Audiobooks Non-fiction</option>
+        </select>
+        <input type="text" class="search-field" placeholder="Search Books">
         <button class="text-search">Search</button>
         <button class="voice-search">Speech</button>
     </form>
 
-    <h3>Top Popular books of the month</h3>
-    <ul>
-        <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</li>
-        <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</li>
-        <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</li>
-        <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</li>
-        <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</li>
-        <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</li>
-        <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</li>
-        <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</li>
-        <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</li>
-        <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</li>
-    </ul>
     <div class="results js-results">
     </div>
 
