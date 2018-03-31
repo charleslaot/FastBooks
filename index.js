@@ -13,7 +13,7 @@ function getBooksFromAPI(category, searchTerm, callback) {
             q: category + ":" + searchTerm,
             key: 'AIzaSyC-I8kwctrYAD0KrzZvKq7KxcbakJuVPXw'
         },
-        dataType: 'json',git 
+        dataType: 'json',
         type: 'GET',
         success: callback
     };
