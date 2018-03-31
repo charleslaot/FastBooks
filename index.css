@@ -25,3 +25,8 @@ p {
 form {
     margin-bottom: 35px;
 }
+
+img {
+    width: 128px;
+    height: 192px;
+}

@@ -5,13 +5,16 @@ const NYT_API_URL = "https://api.nytimes.com/svc/books/v3/lists.json?api-key=ecb
 
 // ajax calls
 function getBooksFromAPI(category, searchTerm, callback) {
+    console.log("google api");
+    console.log(category);
+    console.log(searchTerm);
     const settings = {
         url: GOOGLE_BOOKS_API_URL,
         data: {
             maxResults: 10,
             printType: "books",
             q: category + ":" + searchTerm,
-            key: 'AIzaSyC-I8kwctrYAD0KrzZvKq7KxcbakJuVPXw'
+            key: 'AIzaSyA1fQ5txXio4GYzBgM9Rc2W5aT3fQbkrU8'
         },
         dataType: 'json',
         type: 'GET',
@@ -20,9 +23,10 @@ function getBooksFromAPI(category, searchTerm, callback) {
     return $.ajax(settings);
 }
 
-function getBestSellerList(apiURL, listName, callback) {
+function getBestSellerList(listName, callback) {
+    console.log("NYT api");
     const settings = {
-        url: apiURL,
+        url: NYT_API_URL,
         data: {
             list: listName
         },
@@ -38,10 +42,9 @@ function getBook(isbn) {
 }
 
 // Passing the results to HTML
-function displaySearchData(data) {
-    const results = data.items.map((item, index) => {
-        renderBooks(item);
-    });
+function displaySearchData(data) {    
+    const results = data.items.map((item, index) => renderBooks(item));
+    console.log(results);
     $('.js-results').html(results);
 }
 
@@ -49,11 +52,10 @@ function displayBestSellerData(data) {
     Promise.all(data.results.map((item, index) => {
         const isbn = item.isbns[1].isbn10;
         return getBook(isbn).then(results => {
-            let thumbnail = '/default.jpg';
+            let thumbnail = 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg';
             if (results.totalItems === 1) {
                 thumbnail = results.items[0].volumeInfo.imageLinks.thumbnail;
             }
-            console.log('thumbnail', thumbnail);
             return renderBestSellers(item, thumbnail);
         });
     })).then(results => {
@@ -69,7 +71,7 @@ function watchSubmit() {
         let query = $(event.currentTarget).find('.search-field').val();
         if (category === "bestSeller") {
             let subCategory = $(".bestSeller option:checked").val();
-            getBestSellerList(NYT_API_URL, subCategory, displayBestSellerData);
+            getBestSellerList(subCategory, displayBestSellerData);
         } else {
             getBooksFromAPI(category, query, displaySearchData);
         }
@@ -90,6 +92,43 @@ function selectBestSellers() {
         }
     });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Speech Functionality
 function speechRecognition() {

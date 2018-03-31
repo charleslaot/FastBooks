@@ -3,20 +3,19 @@ function renderBooks(results) {
   // <p>DESCRIPTION: ${results.searchInfo.textSnippet}</p>           
 
   return `
-      <div class="results js-results">
-        <p>TITLE: ${results.volumeInfo.title}</p>        
-        <p>AUTHOR: ${results.volumeInfo.authors}</p>
-        <p>DATE PUBLISHED: ${results.volumeInfo.publishedDate}</p>  
-        <p>PUBLISHER: ${results.volumeInfo.publisher}</p>  
-
-      </div>
-      <div class="separator">
-      </div>
-    `;
+        <div class="results js-results">
+          <p>TITLE: ${results.volumeInfo.title}</p>        
+          <p>AUTHOR: ${results.volumeInfo.authors}</p>
+          <p>DATE PUBLISHED: ${results.volumeInfo.publishedDate}</p>  
+          <p>PUBLISHER: ${results.volumeInfo.publisher}</p>  
+  
+        </div>
+        <div class="separator">
+        </div>
+      `;
 }
 
 function renderBestSellers(results, thumbnail) {
-  console.log('renderBestSellers', thumbnail);
   let coverISBN = results.isbns[0].isbn13;
   return `
       <div class="results js-results">
