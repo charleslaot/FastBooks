@@ -1,21 +1,18 @@
-function renderBooks(results) {
-
+function renderBooks(results, thumbnail) {  
   return `
         <div class="results js-results">
-        <img src=${results.volumeInfo.imageLinks.thumbnail} alt=${results.volumeInfo.title} book cover>       
-        <p>DESCRIPTION: ${results.searchInfo.textSnippet}</p>                 
-        <p>TITLE: ${results.volumeInfo.title}</p>        
-        <p>AUTHOR: ${results.volumeInfo.authors}</p>
-        <p>DATE PUBLISHED: ${results.volumeInfo.publishedDate}</p>  
-        <p>PUBLISHER: ${results.volumeInfo.publisher}</p>    
+          <img src="${thumbnail}" alt=${results.volumeInfo.title} book cover>                 
+          <p>TITLE: ${results.volumeInfo.title}</p>        
+          <p>AUTHOR: ${results.volumeInfo.authors}</p>
+          <p>DATE PUBLISHED: ${results.volumeInfo.publishedDate}</p>  
+          <p>PUBLISHER: ${results.volumeInfo.publisher}</p>    
         </div>
         <div class="separator">
         </div>
       `;
 }
 
-function renderBestSellers(results, thumbnail) {
-  let coverISBN = results.isbns[0].isbn13;
+function renderBestSellers(results, thumbnail) {  
   return `
       <div class="results js-results">
       <img src="${thumbnail}">   

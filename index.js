@@ -40,25 +40,19 @@ function getBook(isbn) {
 
 // Passing the results to HTML
 function displaySearchData(data) {
-    Promise.all(data.items.map((item, index) => {
-        results => {
-            var thumbnail = '';
-            if (results.totalItems !== 1 || !(results.items[0].volumeInfo.imageLinks)) {
-                thumbnail = 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg';
-            } else {
-                thumbnail = results.items[0].volumeInfo.imageLinks.thumbnail;
-            }
-            return renderBestSellers(item, thumbnail);
-        };
-    })).then(results => {
-        $('.js-results').html(results);
-    }).catch(function (error) {
-        console.log("error message");
-    })
+    const results = data.items.map((item, index) => {
+        var thumbnail = '';
+        if (!item.volumeInfo.imageLinks) {
+            thumbnail = 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg';
+        } else {
+            thumbnail = item.volumeInfo.imageLinks.thumbnail;
+        }
+        return renderBooks(item, thumbnail);
+    });
+    $('.js-results').html(results);
 }
 
 function displayBestSellerData(data) {
-    console.log(data);
     Promise.all(data.results.map((item, index) => {
         var isbn = '';
         if (!(item.isbns[1])) {
@@ -66,7 +60,6 @@ function displayBestSellerData(data) {
         } else {
             isbn = item.isbns[1].isbn13;
         }
-        console.log("isbn", isbn);
         return getBook(isbn).then(results => {
             var thumbnail = '';
             if (results.totalItems !== 1 || !(results.items[0].volumeInfo.imageLinks)) {
@@ -83,7 +76,6 @@ function displayBestSellerData(data) {
         console.log("error message");
     })
 }
-
 
 // On submit
 function watchSubmit() {
@@ -115,43 +107,6 @@ function selectBestSellers() {
     });
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Speech Functionality
 function speechRecognition() {
     $("form").on('click', '.voice-search', function (event) {
@@ -182,7 +137,6 @@ function startDictation() {
             recognition.stop();
             console.log("There's been an error in speech recognition");
         }
-
     }
 }
 
