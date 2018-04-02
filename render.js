@@ -1,14 +1,13 @@
 function renderBooks(results) {
-  // <img src=${results.volumeInfo.imageLinks.thumbnail} alt=${results.volumeInfo.title} book cover>       
-  // <p>DESCRIPTION: ${results.searchInfo.textSnippet}</p>           
 
   return `
         <div class="results js-results">
-          <p>TITLE: ${results.volumeInfo.title}</p>        
-          <p>AUTHOR: ${results.volumeInfo.authors}</p>
-          <p>DATE PUBLISHED: ${results.volumeInfo.publishedDate}</p>  
-          <p>PUBLISHER: ${results.volumeInfo.publisher}</p>  
-  
+        <img src=${results.volumeInfo.imageLinks.thumbnail} alt=${results.volumeInfo.title} book cover>       
+        <p>DESCRIPTION: ${results.searchInfo.textSnippet}</p>                 
+        <p>TITLE: ${results.volumeInfo.title}</p>        
+        <p>AUTHOR: ${results.volumeInfo.authors}</p>
+        <p>DATE PUBLISHED: ${results.volumeInfo.publishedDate}</p>  
+        <p>PUBLISHER: ${results.volumeInfo.publisher}</p>    
         </div>
         <div class="separator">
         </div>

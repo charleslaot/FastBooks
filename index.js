@@ -37,12 +37,13 @@ function getBestSellerList(listName, callback) {
     $.ajax(settings);
 }
 
+// Getting the ISBN from Google API
 function getBook(isbn) {
     return getBooksFromAPI('isbn', isbn);
 }
 
 // Passing the results to HTML
-function displaySearchData(data) {    
+function displaySearchData(data) {
     const results = data.items.map((item, index) => renderBooks(item));
     console.log(results);
     $('.js-results').html(results);
