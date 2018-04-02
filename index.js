@@ -5,16 +5,13 @@ const NYT_API_URL = "https://api.nytimes.com/svc/books/v3/lists.json?api-key=ecb
 
 // ajax calls
 function getBooksFromAPI(category, searchTerm, callback) {
-    console.log("google api");
-    console.log(category);
-    console.log(searchTerm);
     const settings = {
         url: GOOGLE_BOOKS_API_URL,
         data: {
             maxResults: 10,
             printType: "books",
             q: category + ":" + searchTerm,
-            key: 'AIzaSyA1fQ5txXio4GYzBgM9Rc2W5aT3fQbkrU8'
+            key: 'AIzaSyDHb04nhTdow0xY9n8du_BolI9PloRRFA0'
         },
         dataType: 'json',
         type: 'GET',
@@ -24,7 +21,6 @@ function getBooksFromAPI(category, searchTerm, callback) {
 }
 
 function getBestSellerList(listName, callback) {
-    console.log("NYT api");
     const settings = {
         url: NYT_API_URL,
         data: {
@@ -44,25 +40,50 @@ function getBook(isbn) {
 
 // Passing the results to HTML
 function displaySearchData(data) {
-    const results = data.items.map((item, index) => renderBooks(item));
-    console.log(results);
-    $('.js-results').html(results);
+    Promise.all(data.items.map((item, index) => {
+        results => {
+            var thumbnail = '';
+            if (results.totalItems !== 1 || !(results.items[0].volumeInfo.imageLinks)) {
+                thumbnail = 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg';
+            } else {
+                thumbnail = results.items[0].volumeInfo.imageLinks.thumbnail;
+            }
+            return renderBestSellers(item, thumbnail);
+        };
+    })).then(results => {
+        $('.js-results').html(results);
+    }).catch(function (error) {
+        console.log("error message");
+    })
 }
 
 function displayBestSellerData(data) {
+    console.log(data);
     Promise.all(data.results.map((item, index) => {
-        const isbn = item.isbns[1].isbn10;
+        var isbn = '';
+        if (!(item.isbns[1])) {
+            isbn = item.isbns[0].isbn13;
+        } else {
+            isbn = item.isbns[1].isbn13;
+        }
+        console.log("isbn", isbn);
         return getBook(isbn).then(results => {
-            let thumbnail = 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg';
-            if (results.totalItems === 1) {
+            var thumbnail = '';
+            if (results.totalItems !== 1 || !(results.items[0].volumeInfo.imageLinks)) {
+                thumbnail = 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg';
+            } else {
                 thumbnail = results.items[0].volumeInfo.imageLinks.thumbnail;
             }
+
             return renderBestSellers(item, thumbnail);
         });
     })).then(results => {
         $('.js-results').html(results);
-    });
+    }).catch(function (error) {
+        console.log("error message");
+    })
 }
+
 
 // On submit
 function watchSubmit() {
