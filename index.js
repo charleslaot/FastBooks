@@ -40,14 +40,21 @@ function getBook(isbn) {
 
 // Passing the results to HTML
 function displaySearchData(data) {
+    var isbn = '';
+    var thumbnail = '';
     const results = data.items.map((item, index) => {
-        var thumbnail = '';
+        if (!(item.volumeInfo.industryIdentifiers)) {
+            isbn = '';
+        } else {
+            isbn = item.volumeInfo.industryIdentifiers[0].identifier;
+        }
         if (!item.volumeInfo.imageLinks) {
             thumbnail = 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg';
         } else {
             thumbnail = item.volumeInfo.imageLinks.thumbnail;
         }
-        return renderBooks(item, thumbnail);
+
+        return renderBooks(item, thumbnail, isbn);
     });
     $('.js-results').html(results);
 }
@@ -67,13 +74,10 @@ function displayBestSellerData(data) {
             } else {
                 thumbnail = results.items[0].volumeInfo.imageLinks.thumbnail;
             }
-
-            return renderBestSellers(item, thumbnail);
+            return renderBestSellers(item, thumbnail, isbn);
         });
     })).then(results => {
         $('.js-results').html(results);
-    }).catch(function (error) {
-        console.log("error message");
     })
 }
 
@@ -96,11 +100,11 @@ function watchSubmit() {
 function selectBestSellers() {
     $('.selectParam').change(function () {
         if ($(".selectParam option:selected").text() === "Best Seller") {
-            $('form input').toggle();
+            $('form input').toggle().attr("required", false);
             $('form .bestSeller').toggle();
             $('form .voice-search').toggle();
         } else {
-            $('form input').show();
+            $('form input').show().attr("required", true);
             $('form .voice-search').show();
             $('form .bestSeller').hide();
         }
@@ -137,6 +141,7 @@ function startDictation() {
             recognition.stop();
             console.log("There's been an error in speech recognition");
         }
+
     }
 }
 
