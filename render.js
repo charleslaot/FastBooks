@@ -5,8 +5,11 @@ function renderBooks(results, thumbnail, ISBN) {
           <p>TITLE: ${results.volumeInfo.title}</p>        
           <p>AUTHOR: ${results.volumeInfo.authors}</p> 
           <button>
-          <a href="http://search.barnesandnoble.com/booksearch/ISBNInquiry.asp?EAN=${ISBN}" target=_blank>Buy on Barns and Noble</a>
-        </button>                    
+            <a href="https://www.amazon.com/dp/${ISBN}" target=_blank>Buy on Amazon</a>
+          </button>      
+          <button>
+            <a href="http://search.barnesandnoble.com/booksearch/ISBNInquiry.asp?EAN=${ISBN}" target=_blank>Buy on Barns and Noble</a>
+          </button>                    
           <button>
             <a href="http://www.booksamillion.com/p/${ISBN}?" target=_blank>Buy on Books a Million</a>
           </button>            

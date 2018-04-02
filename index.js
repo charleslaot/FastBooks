@@ -40,26 +40,27 @@ function getBook(isbn) {
 
 // Passing the results to HTML
 function displaySearchData(data) {
+    console.log("google data", data);
     var isbn = '';
     var thumbnail = '';
     const results = data.items.map((item, index) => {
         if (!(item.volumeInfo.industryIdentifiers)) {
-            isbn = '';
+            isbn = '';            
         } else {
-            isbn = item.volumeInfo.industryIdentifiers[0].identifier;
+            isbn = item.volumeInfo.industryIdentifiers.find(function (obj) {return obj.type === 'ISBN_10';}).identifier                        
         }
         if (!item.volumeInfo.imageLinks) {
             thumbnail = 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg';
         } else {
             thumbnail = item.volumeInfo.imageLinks.thumbnail;
         }
-
+console.log(isbn);
         return renderBooks(item, thumbnail, isbn);
     });
     $('.js-results').html(results);
 }
 
-function displayBestSellerData(data) {
+function displayBestSellerData(data) {    
     Promise.all(data.results.map((item, index) => {
         var isbn = '';
         if (!(item.isbns[1])) {
@@ -74,6 +75,7 @@ function displayBestSellerData(data) {
             } else {
                 thumbnail = results.items[0].volumeInfo.imageLinks.thumbnail;
             }
+            console.log(isbn);
             return renderBestSellers(item, thumbnail, isbn);
         });
     })).then(results => {
