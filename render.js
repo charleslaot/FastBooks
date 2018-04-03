@@ -1,6 +1,6 @@
 function renderBooks(results, thumbnail, ISBN) {
   return `
-        <div class="results js-results">
+        <div class="book col">
           <img src="${thumbnail}" alt=${results.volumeInfo.title} book cover>                 
           <p>TITLE: ${results.volumeInfo.title}</p>        
           <p>AUTHOR: ${results.volumeInfo.authors}</p> 
@@ -14,16 +14,16 @@ function renderBooks(results, thumbnail, ISBN) {
             <a href="http://www.booksamillion.com/p/${ISBN}?" target=_blank>Buy on Books a Million</a>
           </button>            
         </div>
-        <div class="separator">
-        </div>
       `;
 }
+
+
 function renderBestSellers(results, thumbnail, ISBN) {
   return `
-      <div class="results js-results">
-      <img src="${thumbnail}">   
-        <p>TITLE: ${results.book_details[0].title}</p>            
-        <p>AUTHOR: ${results.book_details[0].author}</p>        
+      <div class="book col">
+        <img src="${thumbnail}">   
+        <p class="title">${results.book_details[0].title.toLowerCase()}</p>
+        <!--p>AUTHOR: ${results.book_details[0].author}</p>        
         <p>DATE BEST SELLER: ${results.bestsellers_date}</p>  
         <p>BEST SELLER RANK: ${results.rank}</p>  
         <button>
@@ -34,10 +34,8 @@ function renderBestSellers(results, thumbnail, ISBN) {
         </button> 
         <button>
           <a href="http://www.booksamillion.com/p/${ISBN}?" target=_blank>Buy on Books a Million</a>
-        </button>                
+        </button -->
         
-      </div>
-      <div class="separator">
       </div>
     `;
 }

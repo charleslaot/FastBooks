@@ -47,7 +47,9 @@ function displaySearchData(data) {
         if (!(item.volumeInfo.industryIdentifiers)) {
             isbn = '';            
         } else {
-            isbn = item.volumeInfo.industryIdentifiers.find(function (obj) {return obj.type === 'ISBN_10';}).identifier                        
+            isbn = item.volumeInfo.industryIdentifiers.find(function (obj) {
+              return obj.type === 'ISBN_10';
+            }).identifier
         }
         if (!item.volumeInfo.imageLinks) {
             thumbnail = 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg';
@@ -60,22 +62,28 @@ console.log(isbn);
     $('.js-results').html(results);
 }
 
+function getBestSellerISBN(isbns) {
+  let index = 0;
+  if (isbns.length === 2) {
+    index = 1;
+  }
+  return isbns[index].isbn13;
+}
+
+function getBestSellerImage(result) {
+  let thumbnail = 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg';
+  if (result.totalItems > 0 && 
+      result.items[0].volumeInfo.imageLinks.length > 1) {
+    thumbnail = results.items[0].volumeInfo.imageLinks.thumbnail;
+  }
+  return thumbnail;
+}
+
 function displayBestSellerData(data) {    
     Promise.all(data.results.map((item, index) => {
-        var isbn = '';
-        if (!(item.isbns[1])) {
-            isbn = item.isbns[0].isbn13;
-        } else {
-            isbn = item.isbns[1].isbn13;
-        }
-        return getBook(isbn).then(results => {
-            var thumbnail = '';
-            if (results.totalItems !== 1 || !(results.items[0].volumeInfo.imageLinks)) {
-                thumbnail = 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg';
-            } else {
-                thumbnail = results.items[0].volumeInfo.imageLinks.thumbnail;
-            }
-            console.log(isbn);
+        var isbn = getBestSellerISBN(item.isbns);
+        return getBook(isbn).then(result => {
+            var thumbnail = getBestSellerImage(result);
             return renderBestSellers(item, thumbnail, isbn);
         });
     })).then(results => {

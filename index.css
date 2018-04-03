@@ -30,3 +30,32 @@ img {
     width: 128px;
     height: 192px;
 }
+
+body {
+  background: #252830;
+  color: white;
+}
+
+input, select, button {
+  background: #434857;
+  border: none;
+  color: white;
+}
+
+.book {
+  opacity: 0.8;
+}
+
+.book .title {
+  font-size: 12px;
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.book:hover {
+  cursor: pointer;
+  opacity: 1;
+}
