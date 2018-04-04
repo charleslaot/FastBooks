@@ -6,15 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://use.fontawesome.com/fbeba145c2.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="shortcut icon" href="https://image.ibb.co/hmH2QS/cbii9_s0z4d_0.png" type="image/x-icon">
     <link rel="stylesheet" href="index.css">
-    
-    <title>BooksAPI</title>
+    <title>Mr Book</title>
 </head>
 
 <body>
-    <h1>BooksAPI</h1>
+    <h1 class="js-mainHeader">
+        <a href="#">Mr Books</a>
+    </h1>
     <form action='submit' class="search-form js-form" multiple=true>
         <select class="selectParam" name="selectParam">
             <option class="js-byAll" value="all" selected>All</option>
@@ -22,31 +23,25 @@
             <option class="js-byAuthor" value="author">Author</option>
             <option class="js-byGenre" value="genre">Genre</option>
             <option class="js-byPublisher" value="publisher">Publisher</option>
-            <option class="js-byBestSeller" value="bestSeller">Best Seller</option>
-        </select>
-        <select class="bestSeller" name="bestSeller" hidden>
-            <option class="js-businnes" value="business-books" selected>Businnes</option>
-            <option class="js-science" value="science">Science</option>
-            <option class="js-fiction" value="combined-print-and-e-book-fiction">Fiction</option>
-            <option class="js-non-fiction" value="combined-print-and-e-book-nonfiction">Non fiction</option>
-            <option class="js-sport-fitness" value="sports">Sport & fitness</option>
-            <option class="js-children" value="childrens-middle-grade-hardcover">Children</option>
-            <option class="js-young-adult" value="young-adult-hardcover">Young adult</option>                       
         </select>
         <input type="text" class="search-field" placeholder="Search Books" required>
         <button class="text-search">Search</button>
         <button class="voice-search">Speech</button>
     </form>
     <div class="container">
-      <div class="results js-results row">
-      </div>
+        <div class="results js-results row">
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous">
     </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="data.js"></script>
     <script src="render.js"></script>
-    <script src="index.js"></script>    
+    <script src="gmain_controller.js"></script>
+    <script src="bseller_controller.js"></script>
 </body>
 
 </html>

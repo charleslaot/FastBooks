@@ -2,22 +2,6 @@
     box-sizing: border-box;
 }
 
-.separator {
-    background: black;
-    height: 3px;
-    margin: 20px;
-}
-
-form,
-h1,
-h3,
-ul,
-li,
-.results {
-    text-align: center;
-    list-style-type: none;
-}
-
 p {
     margin: 5px;
 }
@@ -32,30 +16,34 @@ img {
 }
 
 body {
-  background: #252830;
-  color: white;
+    background: #252830;
+    color: white;
 }
 
-input, select, button {
-  background: #434857;
-  border: none;
-  color: white;
+input,
+select,
+button {
+    background: #434857;
+    border: none;
+    color: white;
 }
 
 .book {
-  opacity: 0.8;
+    width: 180px;
+    height: 220px;
+    text-align: center
 }
 
 .book .title {
-  font-size: 12px;
-  text-transform: capitalize;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: left;
+    font-size: 12px;
+    text-transform: capitalize;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
 }
 
-.book:hover {
-  cursor: pointer;
-  opacity: 1;
+.book img:hover {
+    /* cursor: pointer; */
+    opacity: 0.3;
 }
