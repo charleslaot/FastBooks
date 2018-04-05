@@ -1,16 +1,10 @@
 function renderBooks(results, thumbnail, ISBN) {
   return `
         <div class="book col">
-          <img src="${thumbnail}" alt=${results.volumeInfo.title} book cover>                 
-          <p>${results.volumeInfo.title}</p>                
-        <!--    <a href="https://www.amazon.com/dp/${ISBN}" target=_blank>Buy on Amazon</a>
-          </button>      
-          <button>
-            <a href="http://search.barnesandnoble.com/booksearch/ISBNInquiry.asp?EAN=${ISBN}" target=_blank>Buy on Barns and Noble</a>
-          </button>                    
-          <button>
-            <a href="http://www.booksamillion.com/p/${ISBN}?" target=_blank>Buy on Books a Million</a>
-          </button>            -->
+          <div class="bookItem w3-animate-opacity">
+            <img src="${thumbnail}" alt=${results.volumeInfo.title} book cover>                 
+            <p class="title">${results.volumeInfo.title}</p>  
+          </div>
         </div>
       `;
 }
@@ -43,4 +37,11 @@ function renderBestSellers(results, thumbnail, ISBN) {
 */
 
 
-
+// <!--    <a href="https://www.amazon.com/dp/${ISBN}" target=_blank>Buy on Amazon</a>
+// </button>      
+// <button>
+//   <a href="http://search.barnesandnoble.com/booksearch/ISBNInquiry.asp?EAN=${ISBN}" target=_blank>Buy on Barns and Noble</a>
+// </button>                    
+// <button>
+//   <a href="http://www.booksamillion.com/p/${ISBN}?" target=_blank>Buy on Books a Million</a>
+// </button>            -->

@@ -3,21 +3,19 @@
 }
 
 p {
-    margin: 5px;
-}
-
-form {
-    margin-bottom: 35px;
+    margin: 4px 0;    
 }
 
 img {
-    width: 128px;
-    height: 192px;
+    width: 130px;
+    height: 200px;
+    border-radius: 5px;
 }
 
 body {
-    background: #252830;
+    background: #17181B;
     color: white;
+    margin-top: 50px;
 }
 
 input,
@@ -28,22 +26,66 @@ button {
     color: white;
 }
 
+.search-field {
+    border-radius: 5px;
+    height: 40px;
+    width: 250px;
+    padding-left: 20px;    
+}
+
+.search-form {
+    padding: 50px 0;
+    text-align: center;
+}
+
 .book {
-    width: 180px;
-    height: 220px;
-    text-align: center
+    margin: 30px 10px;
+    padding: 0;
 }
 
 .book .title {
-    font-size: 12px;
+    font-size: 14px;
     text-transform: capitalize;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    text-align: center;
+    text-align: left;
+    width: 130px;
 }
 
 .book img:hover {
     /* cursor: pointer; */
-    opacity: 0.3;
+    opacity: 0.6;
+    border: 1px solid black;
+    border-radius: 5px
+}
+
+.bookItem {
+    width: 130px;
+    height: 200px;
+    margin: auto;
+}
+
+.container {
+ padding: 0;  
+ min-width: 380px;
+}
+
+.results {
+    padding-top: 40px;
+}
+    
+
+.mainHeader {
+    font-family: "Tangerine", serif;
+    font-size: 6em;
+    text-align: center
+}
+
+.mainHeader:hover {    
+    cursor: pointer;
+}
+
+i {
+    font-size: 25px !important;
 }

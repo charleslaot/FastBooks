@@ -7,7 +7,7 @@ function getBooksFromAPI(category, searchTerm, callback) {
     const settings = {
         url: GOOGLE_BOOKS_API_URL,
         data: {
-            maxResults: 10,
+            maxResults: 30,
             printType: "books",
             q: category + ":" + searchTerm,
             key: 'AIzaSyBaEU7oEwRmOn762c570LWp2eo57_vfMJQ'
@@ -52,8 +52,7 @@ function nothingFoundMsg() {
 function displaySearchData(data) {
     var isbn = '';
     var thumbnail = 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg';
-    if (checkForItemsReceived(data.totalItems)) {
-        console.log(data);
+    if (checkForItemsReceived(data.totalItems)) {        
         const results = data.items.map((item, index) => {
             if (checkForISBNValidity(item)) {
                 isbn = item.volumeInfo.industryIdentifiers.find(function (obj) {

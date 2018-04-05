@@ -3,31 +3,33 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://use.fontawesome.com/fbeba145c2.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
     <link rel="shortcut icon" href="https://image.ibb.co/hmH2QS/cbii9_s0z4d_0.png" type="image/x-icon">
     <link rel="stylesheet" href="index.css">
-    <title>Mr Book</title>
+    <title>Mr. Books</title>
 </head>
 
 <body>
-    <h1 class="js-mainHeader">
-        <a href="#">Mr Books</a>
-    </h1>
-    <form action='submit' class="search-form js-form" multiple=true>
-        <select class="selectParam" name="selectParam">
-            <option class="js-byAll" value="all" selected>All</option>
-            <option class="js-byTitle" value="title">Title</option>
-            <option class="js-byAuthor" value="author">Author</option>
-            <option class="js-byGenre" value="genre">Genre</option>
-            <option class="js-byPublisher" value="publisher">Publisher</option>
-        </select>
-        <input type="text" class="search-field" placeholder="Search Books" required>
-        <button class="text-search">Search</button>
-        <button class="voice-search">Speech</button>
-    </form>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="mainHeader js-mainHeader">Mr. Books</h1>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <form action='submit' class="search-form js-form" multiple=true>
+                    <i class="fa fa-search"></i>
+                    <input type="text" class="search-field" placeholder="Search" required>
+                    <i class="fa fa-microphone"></i>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="results js-results row">
         </div>
@@ -45,3 +47,15 @@
 </body>
 
 </html>
+
+
+<!-- <select class="selectParam" name="selectParam">
+                    <option class="js-byAll" value="all" selected>All</option>
+                    <option class="js-byTitle" value="title">Title</option>
+                    <option class="js-byAuthor" value="author">Author</option>
+                    <option class="js-byGenre" value="genre">Genre</option>
+                    <option class="js-byPublisher" value="publisher">Publisher</option>
+                </select>
+                <input type="text" class="search-field" placeholder="Search Books" required>
+                <button class="text-search">Search</button>
+                <button class="voice-search">Speech</button> -->
