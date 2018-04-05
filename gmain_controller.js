@@ -5,9 +5,9 @@ const GOOGLE_BOOKS_API_URL = "https://www.googleapis.com/books/v1/volumes";
 // Google API ajax call
 function getBooksFromAPI(category, searchTerm, callback) {
     const settings = {
-        url: GOOGLE_BOOKS_API_URL,
+        url: GOOGLE_BOOKS_API_URL,        
         data: {
-            maxResults: 30,
+            maxResults: 40,
             printType: "books",
             q: category + ":" + searchTerm,
             key: 'AIzaSyBaEU7oEwRmOn762c570LWp2eo57_vfMJQ'
@@ -76,7 +76,7 @@ function watchSubmit() {
             showBestSeller();
         }));
 
-    $('.js-form').submit(event => {
+    $('.js-searchSubmit').click(event => {
         event.preventDefault();
         let category = $("option:checked").val();
         let query = $(event.currentTarget).find('.search-field').val();
@@ -103,7 +103,7 @@ function startDictation() {
             let results = e.results[0][0].transcript;
             $('.search-field').val(results);
             recognition.stop();
-            getBooksFromAPI(results, displaySearchData)
+            getBooksFromAPI("all", results, displaySearchData)
         };
         recognition.onerror = function (e) {
             recognition.stop();
