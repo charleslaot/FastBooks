@@ -1,35 +1,41 @@
 'use strict'
 
 const GOOGLE_BOOKS_API_URL = "https://www.googleapis.com/books/v1/volumes";
+var searchIndex = 0;	
 
 // Google API ajax call
-function getBooksFromAPI(category, searchTerm, callback) {
+function getBooksFromAPI(category, searchTerm, index, callback) {
     const settings = {
         url: GOOGLE_BOOKS_API_URL,
         data: {
             maxResults: 40,
             printType: "books",
+            startIndex: index,
             q: category + ":" + searchTerm,
-            key: 'AIzaSyBaEU7oEwRmOn762c570LWp2eo57_vfMJQ'
+            key: 'AIzaSyClcxPMhuThAaXYb0Ju-Kxd-rEReEzH2gc'
         },
         dataType: 'json',
         type: 'GET',
         success: callback
     };
+    searchIndex += 40;
     return $.ajax(settings);
 }
 
-function checkForItemsReceived(resultItems) {
-    if (resultItems > 0) {
-        return true;
-    } else {
+function checkForItemsReceived(data) {
+    if (data.totalItems === 0 || (!(data.items))) {
+        console.log("data total items", data.totalItems);
+        console.log("data items", data.items);
         return false;
+    } else {
+        return true;
     }
 }
 
-function checkForISBNValidity(item) {
+function checkForISBNValidity(item) {    
     if (!(item.volumeInfo.industryIdentifiers) ||
-        (item.volumeInfo.industryIdentifiers[0].type === "OTHER")) {
+        (item.volumeInfo.industryIdentifiers[0].type !== "ISBN_10") ||
+        (item.volumeInfo.industryIdentifiers[0].type !== "ISBN_13")) {
         return false;
     } else {
         return true;
@@ -53,9 +59,10 @@ function displaySearchData(data) {
     var isbn = '';
     console.log(data);
     var thumbnail = 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg';
-    if (checkForItemsReceived(data.totalItems)) {
+    if (checkForItemsReceived(data)) {
         const results = data.items.map((item, index) => {
             if (checkForISBNValidity(item)) {
+                // console.log(item.volumeInfo.industryIdentifiers.find(function (obj) {return obj.type === 'ISBN_10';}));
                 isbn = item.volumeInfo.industryIdentifiers.find(function (obj) {
                     return obj.type === 'ISBN_10';
                 }).identifier
@@ -65,7 +72,7 @@ function displaySearchData(data) {
             }
             return renderBooks(item, thumbnail, isbn);
         });
-        $('.js-results').html(results);
+        $('.js-results').append(results);
     } else {
         nothingFoundMsg();
     }
@@ -88,7 +95,8 @@ function watchSubmit() {
         let category = $("option:checked").val();
         let query = $(event.currentTarget).find('.search-field').val();
         renderEmptyForm();
-        getBooksFromAPI(category, query, displaySearchData);
+        searchIndex = 0;
+        getBooksFromAPI(category, query, searchIndex, displaySearchData);
     });
 }
 
@@ -111,7 +119,8 @@ function startDictation() {
             let results = e.results[0][0].transcript;
             $('.search-field').val(results);
             recognition.stop();
-            getBooksFromAPI("all", results, displaySearchData)
+            searchIndex = 0;
+            getBooksFromAPI("all", results, searchIndex, displaySearchData)
         };
         recognition.onerror = function (e) {
             recognition.stop();
@@ -125,7 +134,27 @@ function animation() {
     })
 }
 
+
+function infiniteScroll() {
+    var win = $(window);    
+	win.scroll(function() {        
+        if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {		            
+            $('.loading-spinner').show();            
+            let category = $('.js-form option:checked').val();
+            let query = $('.js-form').find('.search-field').val();
+            console.log("cat", category);
+            console.log("query", query);
+            console.log("index", searchIndex);
+            getBooksFromAPI(category, query, searchIndex, displaySearchData);            
+			$('.loading-spinner').hide();
+		}
+	});
+};
+
+
+
 // When page loads
 $(watchSubmit());
 $(speechRecognition());
 $(animation());
+$(infiniteScroll());

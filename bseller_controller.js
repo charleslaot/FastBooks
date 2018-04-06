@@ -47,8 +47,8 @@ function displayBestSellerData(data) {
         });
 
     })).then(results => {
-        $('.js-results-header').append(renderListName(listName));
-        $('.js-results').append(results);
+        $('.js-results-header').html(renderListName(listName));
+        $('.js-results').html(results);
     })
 }
 

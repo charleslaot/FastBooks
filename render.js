@@ -20,7 +20,7 @@ function renderBooks(results, thumbnail, ISBN) {
 }
 
 function renderBestSellers(results, thumbnail, ISBN) {
-  return `               
+  return `    
     <div class="book col">
       <div class="bookItem w3-animate-opacity">        
         <i class="test fa fa-eye fa-lg"></i>        
@@ -42,10 +42,8 @@ function renderBestSellers(results, thumbnail, ISBN) {
 
 function renderListName(name) {
   return `
-    <div class="book col">
-      <div class="w3-animate-opacity">
-        <h5>Best Sellers ${name} Now</h5>            
-      </div>
+    <div class="book col w3-animate-opacity listName">      
+        <h5>${name}</h5>                  
     </div>
     `;
 }

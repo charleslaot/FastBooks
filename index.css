@@ -73,6 +73,10 @@ select {
     margin: auto;
 }
 
+.listName {
+    text-align: center;
+}
+
 .container {
     padding: 0;
     min-width: 380px;
@@ -112,7 +116,7 @@ select {
 
 .results-header {
     width: auto;
-    height: 50px;
+    height: 25px;
     text-align: left;
 }
 
@@ -143,4 +147,9 @@ select {
 .star-rating span {
     font-size: 10px;
     color: #434857
+}
+
+.loading-spinner {
+	display: none;
+	text-align: center;
 }
