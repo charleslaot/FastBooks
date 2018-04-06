@@ -38,26 +38,24 @@ function getBestSellerImage(result) {
 }
 
 function displayBestSellerData(data) {
+    var listName = data.results[0].list_name;
     Promise.all(data.results.map((item, index) => {
         var isbn = getBestSellerISBN(item.isbns);
-
-        var thumbnail = 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg';
-        return renderBestSellers(item, thumbnail, isbn);
-
-        // return getBook(isbn).then(result => {
-        //     var thumbnail = getBestSellerImage(result);
-        //     return renderBestSellers(item, thumbnail, isbn);
-        // });
+        return getBook(isbn).then(result => {
+            let thumbnail = getBestSellerImage(result);
+            return renderBestSellers(item, thumbnail, isbn);
+        });
 
     })).then(results => {
+        $('.js-results-header').append(renderListName(listName));
         $('.js-results').append(results);
     })
 }
 
 // Best Seller list on load
 function showBestSeller() {
-    let i = 0;
-    $('.js-results').empty();
+    // let i = 0;
+    renderEmptyForm();
     getBestSellerList("business-books", displayBestSellerData);
     // getBestSellerList("science", displayBestSellerData);        
 

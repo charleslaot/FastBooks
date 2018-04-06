@@ -2,6 +2,16 @@ function renderBooks(results, thumbnail, ISBN) {
   return `
         <div class="book col">
           <div class="bookItem w3-animate-opacity">
+            <i class="test fa fa-eye fa-lg"></i>        
+            <i class="fa fa-heart fa-lg"></i>   
+            <div class='star-rating'>
+              <i class="fa fa-star"></i>   
+              <i class="fa fa-star"></i>   
+              <i class="fa fa-star"></i>   
+              <i class="fa fa-star"></i>   
+              <i class="fa fa-star-half-full"></i>   
+              <span>4.5/5</span>         
+            </div>
             <img src="${thumbnail}" alt=${results.volumeInfo.title} book cover>                 
             <p class="title">${results.volumeInfo.title}</p>  
           </div>
@@ -9,14 +19,40 @@ function renderBooks(results, thumbnail, ISBN) {
       `;
 }
 
-
 function renderBestSellers(results, thumbnail, ISBN) {
-  return ` 
-    <div class="col book">
-      <img src="${thumbnail}">   
-      <p class="title">${results.book_details[0].title.toLowerCase()}</p>
+  return `               
+    <div class="book col">
+      <div class="bookItem w3-animate-opacity">        
+        <i class="test fa fa-eye fa-lg"></i>        
+        <i class="fa fa-heart fa-lg"></i>   
+        <div class='star-rating'>
+          <i class="fa fa-star"></i>   
+          <i class="fa fa-star"></i>   
+          <i class="fa fa-star"></i>   
+          <i class="fa fa-star"></i>   
+          <i class="fa fa-star-half-full"></i>   
+          <span>4.5/5</span>         
+        </div>
+        <img src="${thumbnail}">  
+        <p class="title">${results.book_details[0].title.toLowerCase()}</p>
+      </div>
     </div>     
     `;
+}
+
+function renderListName(name) {
+  return `
+    <div class="book col">
+      <div class="w3-animate-opacity">
+        <h5>Best Sellers ${name} Now</h5>            
+      </div>
+    </div>
+    `;
+}
+
+function renderEmptyForm() {
+  $('.js-results-header').empty();
+  $('.js-results').empty();
 }
 
 

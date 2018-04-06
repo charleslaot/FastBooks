@@ -5,7 +5,7 @@ const GOOGLE_BOOKS_API_URL = "https://www.googleapis.com/books/v1/volumes";
 // Google API ajax call
 function getBooksFromAPI(category, searchTerm, callback) {
     const settings = {
-        url: GOOGLE_BOOKS_API_URL,        
+        url: GOOGLE_BOOKS_API_URL,
         data: {
             maxResults: 40,
             printType: "books",
@@ -51,8 +51,9 @@ function nothingFoundMsg() {
 // Passing the results to HTML
 function displaySearchData(data) {
     var isbn = '';
+    console.log(data);
     var thumbnail = 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg';
-    if (checkForItemsReceived(data.totalItems)) {        
+    if (checkForItemsReceived(data.totalItems)) {
         const results = data.items.map((item, index) => {
             if (checkForISBNValidity(item)) {
                 isbn = item.volumeInfo.industryIdentifiers.find(function (obj) {
@@ -72,14 +73,21 @@ function displaySearchData(data) {
 
 // On submit
 function watchSubmit() {
-    if ($(".js-mainHeader").click(event => {
-            showBestSeller();
-        }));
+    $(".js-mainHeader").click(event => {
+        $("form input").val('');
+        renderEmptyForm();
+        showBestSeller();
+    });
 
     $('.js-searchSubmit').click(event => {
+        $(".js-form").submit();
+    })
+
+    $('.js-form').submit(event => {
         event.preventDefault();
         let category = $("option:checked").val();
         let query = $(event.currentTarget).find('.search-field').val();
+        renderEmptyForm();
         getBooksFromAPI(category, query, displaySearchData);
     });
 }
@@ -111,6 +119,13 @@ function startDictation() {
     }
 }
 
+function animation() {
+    $(".js-results book").hover(function () {
+        console.log("test");
+    })
+}
+
 // When page loads
 $(watchSubmit());
 $(speechRecognition());
+$(animation());

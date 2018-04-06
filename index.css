@@ -6,6 +6,10 @@ p {
     margin: 4px 0;
 }
 
+h5 {
+    display: inline;
+}
+
 img {
     width: 130px;
     height: 200px;
@@ -23,12 +27,6 @@ select {
     background: #434857;
     border: none;
     color: white;
-}
-
-button {
-    /* background: #17181B;
-    padding: 0px;
-    border: none; */
 }
 
 .search-field {
@@ -80,10 +78,6 @@ button {
     min-width: 380px;
 }
 
-.results {
-    padding-top: 40px;
-}
-
 .mainHeader {
     font-family: "Tangerine", serif;
     font-size: 6em;
@@ -94,7 +88,8 @@ button {
     cursor: pointer;
 }
 
-i {
+.fa-microphone,
+.fa-search {
     font-size: 25px !important;
 }
 
@@ -113,4 +108,39 @@ i {
     position: relative;
     right: 15px;
     top: 2px
+}
+
+.results-header {
+    width: auto;
+    height: 50px;
+    text-align: left;
+}
+
+.fa-eye {
+    font-size: 16px;
+    position: relative;
+    top: 45px;
+    left: 10px;
+    color: #434857
+}
+
+.fa-heart {
+    font-size: 15px;
+    position: relative;
+    top: 45px;
+    left: 80px;
+    color: #434857
+}
+
+.star-rating {
+    font-size: 13px;
+    color: gold;
+    position: relative;
+    top: 195px;
+    left: 7px;
+}
+
+.star-rating span {
+    font-size: 10px;
+    color: #434857
 }
