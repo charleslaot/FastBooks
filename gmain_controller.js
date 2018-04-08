@@ -12,13 +12,13 @@ function getBooksFromAPI(category, searchTerm, index, callback) {
             printType: "books",
             startIndex: index,
             q: category + ":" + searchTerm,
-            key: 'AIzaSyClcxPMhuThAaXYb0Ju-Kxd-rEReEzH2gc'
+            key: 'AIzaSyCt15UNcdqQLDxthNo7sjlr0JEipnG-v2s'
         },
         dataType: 'json',
         type: 'GET',
         success: callback
     };
-    searchIndex += 40;
+    searchIndex += 40;    
     return $.ajax(settings);
 }
 
@@ -48,9 +48,7 @@ function checkForThumbnail(item) {
     }
 }
 
-function nothingFoundMsg() {
-    alert("Nothing to show");
-}
+
 
 // Passing the results to HTML
 function displaySearchData(data) {
@@ -68,9 +66,9 @@ function displaySearchData(data) {
             }
             return renderBooks(item, thumbnail, isbn);
         });
-        $('.js-results').append(results);
+        $('.book-container').append(results);
     } else {
-        nothingFoundMsg();
+        // nothingFoundMsg();
     }
 }
 
@@ -82,23 +80,23 @@ function watchSubmit() {
         showBestSeller();
     });
 
-    $('.js-searchSubmit').click(event => {
+    $('.js-searchSubmit').click(event => {       
         $(".js-form").submit();
     })
 
-    $('.js-form').submit(event => {
+    $('.js-form').submit(event => {                
         event.preventDefault();
         let category = $("option:checked").val();
-        let query = $(event.currentTarget).find('.search-field').val();
+        let query = $(event.currentTarget).find('.search-field').val();      
         renderEmptyForm();
         searchIndex = 0;
         getBooksFromAPI(category, query, searchIndex, displaySearchData);
     });
 }
 
-// Speech Functionality
+// speech functionality
 function speechRecognition() {
-    $("form").on('click', '.voice-search', function (event) {
+    $("form").on('click', '.js-voice-search', function (event) {
         event.preventDefault();
         startDictation();
     })
@@ -124,21 +122,21 @@ function startDictation() {
     }
 }
 
+// jquery animations
 function animation() {
     $(".js-results book").hover(function () {
         console.log("test");
     })
 }
 
+// infinite scroll 
 function infiniteScroll() {
     var win = $(window);
     win.scroll(function () {
-        if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
-            $('.loading-spinner').show();
+        if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {            
             let category = $('.js-form option:checked').val();
             let query = $('.js-form').find('.search-field').val();
-            getBooksFromAPI(category, query, searchIndex, displaySearchData);
-            $('.loading-spinner').hide();
+            getBooksFromAPI(category, query, searchIndex, displaySearchData);            
         }
     });
 };

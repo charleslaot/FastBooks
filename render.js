@@ -49,8 +49,7 @@ function renderListName(name) {
 }
 
 function renderEmptyForm() {
-  $('.js-results-header').empty();
-  $('.js-results').empty();
+  $('.book-container').empty();  
 }
 
 

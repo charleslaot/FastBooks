@@ -73,11 +73,19 @@ select {
     margin: auto;
 }
 
+.book-container {
+    margin: 0 15px;
+}
+
+section {
+    margin: auto !important;   
+}
+
 .listName {
     text-align: center;
 }
 
-.container {
+.container, .book-container {
     padding: 0;
     min-width: 380px;
 }

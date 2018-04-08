@@ -12,7 +12,7 @@ function getBestSellerList(listName, callback) {
         type: 'GET',
         success: callback
     };
-    $.ajax(settings);
+    return $.ajax(settings);
 }
 
 function getBook(isbn) {
@@ -37,33 +37,48 @@ function getBestSellerImage(result) {
     return thumbnail;
 }
 
-function displayBestSellerData(data) {
-    var listName = data.results[0].list_name;
-    Promise.all(data.results.map((item, index) => {
-        var isbn = getBestSellerISBN(item.isbns);
-        return getBook(isbn).then(result => {
-            let thumbnail = getBestSellerImage(result);
-            return renderBestSellers(item, thumbnail, isbn);
+function displayBestSellerData(name) {
+    return function (data) {
+        var listName = data.results[0].list_name;
+        Promise.all(
+            data.results.map((item, index) => {
+                var isbn = getBestSellerISBN(item.isbns);
+                return getBook(isbn).then(result => {
+                    let thumbnail = getBestSellerImage(result);
+                    return renderBestSellers(item, thumbnail, isbn);
+                });
+            })
+        ).then(results => {
+            $(`section.${name} header`).html(renderListName(listName));
+            $(`section.${name} .books`).html(results);
         });
-
-    })).then(results => {
-        $('.js-results-header').html(renderListName(listName));
-        $('.js-results').html(results);
-    })
+    };
 }
 
-// Best Seller list on load
-function showBestSeller() {
-    // let i = 0;
-    renderEmptyForm();
-    getBestSellerList("business-books", displayBestSellerData);
-    // getBestSellerList("science", displayBestSellerData);        
-
-    // bestSellerLists.forEach(listName => {        
-    //     getBestSellerList("business-books", displayBestSellerData);        
-    //     i++;
-    //     console.log("best seller list", i);
-    // })     
+function showBestSeller() {	
+	renderEmptyForm();
+	// clear the <div class="container"> totally
+	$('.book-container').empty();
+	// create sub containers for each section
+	const sections = ['science', 'business-books'];
+	sections.forEach(name => {
+		$('.book-container').append(`
+        <section class=${name}>
+          <header class="row">${name}</header>
+          <div class="row books"></div>
+        </section>
+      `);   
+	});
+	// DATA.view = 'loading';
+	// then we can pass each container and header into displayBestSellerData
+	sections.reduce((promise, name) => {
+		return promise.then(() => {
+			return getBestSellerList(name, displayBestSellerData(name));
+		});
+	}, Promise.resolve()).then(() => {
+	//   DATA.view = 'best-seller';
+	//   emit('loaded');
+	});
 }
 
-// $(showBestSeller());
+$(showBestSeller);
