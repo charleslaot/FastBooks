@@ -1,5 +1,8 @@
 'use strict'
 
+
+
+
 const NYT_API_URL = "https://api.nytimes.com/svc/books/v3/lists.json?api-key=ecb23c2aa6254b85b8623e1916c960f3";
 
 function getBestSellerList(listName, callback) {
@@ -15,9 +18,39 @@ function getBestSellerList(listName, callback) {
     return $.ajax(settings);
 }
 
-function getBook(isbn) {
-    return getBooksFromAPI('isbn', isbn);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function getBook(isbn) {    
+    return getBooksFromAPI(`isbn:${isbn}`);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function getBestSellerISBN(isbns) {
@@ -28,8 +61,22 @@ function getBestSellerISBN(isbns) {
     return isbns[index].isbn13;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function getBestSellerImage(result) {
-    let thumbnail = 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg';
+    let thumbnail = 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg';    
     if (result.totalItems > 0 &&
         result.items[0].volumeInfo.imageLinks) {
         thumbnail = result.items[0].volumeInfo.imageLinks.thumbnail;
@@ -37,13 +84,32 @@ function getBestSellerImage(result) {
     return thumbnail;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function displayBestSellerData(name) {
     return function (data) {
         var listName = data.results[0].list_name;
         Promise.all(
             data.results.map((item, index) => {
                 var isbn = getBestSellerISBN(item.isbns);
-                return getBook(isbn).then(result => {
+                return getBook(isbn).then(result => {                         
                     let thumbnail = getBestSellerImage(result);
                     return renderBestSellers(item, thumbnail, isbn);
                 });
@@ -55,10 +121,29 @@ function displayBestSellerData(name) {
     };
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function showBestSeller() {	
-	renderEmptyForm();
-	// clear the <div class="container"> totally
-	$('.book-container').empty();
+	renderEmptyForm();	
+	
 	// create sub containers for each section
 	const sections = ['science', 'business-books'];
 	sections.forEach(name => {
@@ -81,4 +166,11 @@ function showBestSeller() {
 	});
 }
 
-// $(showBestSeller);
+
+
+
+
+
+
+
+

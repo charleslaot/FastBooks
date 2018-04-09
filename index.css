@@ -13,8 +13,7 @@ h5 {
 img {
     width: 130px;
     height: 200px;
-    border-radius: 5px;   
-    
+    border-radius: 5px;
 }
 
 body {
@@ -59,6 +58,10 @@ select {
     text-overflow: ellipsis;
     text-align: left;
     width: 130px;
+}
+
+.best-seller-lightbox-title {
+    text-transform: capitalize;
 }
 
 .book img:hover {
@@ -164,9 +167,7 @@ section {
 }
 
 .lightbox {
-    /** Default lightbox to hidden */
     display: none;
-    /** Position and style */
     position: fixed;
     z-index: 999;
     width: 100%;
@@ -178,15 +179,12 @@ section {
 }
 
 .lightbox img {
-    /** Pad the lightbox image */
     width: 250px;
     height: 400px;
 }
 
 .lightbox:target {
-    /** Remove default browser outline */
     outline: none;
-    /** Unhide lightbox **/
     display: block;
     overflow-y: scroll;
 }
@@ -208,4 +206,3 @@ section {
     position: relative;
     top: 10%;
 }
-

@@ -1,7 +1,20 @@
 'use strict'
 
+
+
+
+// Globals
 const GOOGLE_BOOKS_API_URL = "https://www.googleapis.com/books/v1/volumes";
 var searchIndex = 0;
+
+
+
+
+
+
+
+
+
 
 // Google API ajax call
 function getBooksFromAPI(searchTerm, index, callback) {
@@ -18,9 +31,33 @@ function getBooksFromAPI(searchTerm, index, callback) {
         type: 'GET',
         success: callback
     };
-    searchIndex += 40;    
+    
     return $.ajax(settings);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function checkForItemsReceived(data) {
     if (data.totalItems === 0 || (!(data.items))) {
@@ -56,15 +93,46 @@ function checkForSnippet(item){
     }
 }
 
+function checkForAuthor(item){
+    if (!item.volumeInfo.authors){
+        return false;
+    } else {
+        return true
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Passing the results to HTML
 function displaySearchData(data) {    
     var isbn = '';
     var snippet = '';
+    var author = '';
     var thumbnail = 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg';
     if (checkForItemsReceived(data)) {
         const results = data.items.map((item, index) => {
+            console.log(item);
             if (checkForISBNValidity(item)) {
                 isbn = item.volumeInfo.industryIdentifiers.find(function (obj) {
                     return obj.type === 'ISBN_10';
@@ -76,13 +144,35 @@ function displaySearchData(data) {
             if (checkForSnippet(item)){
                 snippet = item.searchInfo.textSnippet;
             }
-            return renderBooks(item, thumbnail, isbn, snippet);
+            if (checkForAuthor(item)){
+                author = item.volumeInfo.authors[0];
+            }
+            return renderBooks(item, thumbnail, isbn, snippet, author);
         });
         $('.book-container').append(results);
     } else {
-        // nothingFoundMsg();
+        // $('.book-container').append(`<h5>No more books to show</h5>`);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // On submit
 function watchSubmit() {
@@ -105,6 +195,34 @@ function watchSubmit() {
         getBooksFromAPI(query, searchIndex, displaySearchData);
     });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // speech functionality
 function speechRecognition() {
@@ -134,29 +252,42 @@ function startDictation() {
     }
 }
 
-// jquery animations
-function bookLightbox() {
-    $(".book-container").on('click', "img" , function (event) {
-        
-    })
-}
-
 // infinite scroll 
 function infiniteScroll() {
     var win = $(window);
     win.scroll(function () {
-        if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {            
-            let category = $('.js-form option:checked').val();
-            let query = $('.js-form').find('.search-field').val();
-            getBooksFromAPI(query, searchIndex, displaySearchData);            
+        if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {                        
+            let query = $('.js-form').find('.search-field').val();            
+            if (query !== ''){
+                getBooksFromAPI(query, searchIndex, displaySearchData); 
+                searchIndex += 40;               
+            }
         }
     });
 };
 
 
 
-// When page loads
-$(watchSubmit());
-$(speechRecognition());
-$(bookLightbox());
-$(infiniteScroll());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function onLoadTrigger() {
+    $(watchSubmit());
+    $(speechRecognition());
+    $(infiniteScroll());
+    // $(showBestSeller())
+}
+
+$(onLoadTrigger());
+
