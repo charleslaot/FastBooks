@@ -3,7 +3,7 @@
 
 
 
-function renderBooks(results, thumbnail, ISBN, snippet, author) {
+function renderBooks(book) {
   return `
     <div class="book col">
       <div class="bookItem w3-animate-opacity">
@@ -17,17 +17,17 @@ function renderBooks(results, thumbnail, ISBN, snippet, author) {
           <i class="fa fa-star-half-full"></i>   
           <span>4.5/5</span>         
         </div>            
-        <a href='#${results.id}'>
-          <img src="${thumbnail}" alt=${results.volumeInfo.title} book cover>                 
+        <a href='#${book.id}'>
+          <img src="${book.thumbnail}" alt=${book.title} book cover>                 
         </a>
-        <p class="title">${results.volumeInfo.title}</p>  
+        <p class="title">${book.title}</p>  
         
-        <div class="lightbox" id="${results.id}">
+        <div class="lightbox" id="${book.id}">
           <div class="lightbox-content">
             <a href="#_" class="fa fa-close fa-2x"></a>
-            <img src="${thumbnail}">
-            <h4>${results.volumeInfo.title} <h6>by</h6> <h5>${author}</h5></h4>
-            <p class="book-description">${snippet}</p>
+            <img src="${book.thumbnail}">
+            <h4>${book.title} <h6>by</h6> <h5>${book.author}</h5></h4>
+            <p class="book-description">${book.snippet}</p>
           </div>
         </div>        
       </div>      

@@ -3,7 +3,7 @@
 
 
 
-const NYT_API_URL = "https://api.nytimes.com/svc/books/v3/lists.json?api-key=ecb23c2aa6254b85b8623e1916c960f3";
+// const NYT_API_URL = "https://api.nytimes.com/svc/books/v3/lists.json?api-key=ecb23c2aa6254b85b8623e1916c960f3";
 
 function getBestSellerList(listName, callback) {
     const settings = {
@@ -162,12 +162,3 @@ function showBestSeller() {
 	//   emit('loaded');
 	});
 }
-
-
-
-
-
-
-
-
-
