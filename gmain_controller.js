@@ -25,7 +25,7 @@ function getBooksFromAPI(searchTerm, index, callback) {
             printType: "books",
             startIndex: index,
             q: searchTerm,
-            key: 'AIzaSyBReLAn1kK-DrwyWi72Ja3wXlJe7r8-R9U'
+            key: 'AIzaSyAF1cL0-c1jdrtp4BPwVqaaD374DD5XcNU'
         },
         dataType: 'json',
         type: 'GET',
@@ -131,8 +131,7 @@ function displaySearchData(data) {
     var author = '';
     var thumbnail = 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg';
     if (checkForItemsReceived(data)) {
-        const results = data.items.map((item, index) => {
-            console.log(item);
+        const results = data.items.map((item, index) => {            
             if (checkForISBNValidity(item)) {
                 isbn = item.volumeInfo.industryIdentifiers.find(function (obj) {
                     return obj.type === 'ISBN_10';
@@ -195,13 +194,6 @@ function watchSubmit() {
         getBooksFromAPI(query, searchIndex, displaySearchData);
     });
 }
-
-
-
-
-
-
-
 
 
 

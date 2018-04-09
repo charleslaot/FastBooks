@@ -26,7 +26,7 @@ function renderBooks(results, thumbnail, ISBN, snippet, author) {
           <div class="lightbox-content">
             <a href="#_" class="fa fa-close fa-2x"></a>
             <img src="${thumbnail}">
-            <h3>${results.volumeInfo.title} <h6>by</h6> <h5>${author}</h5></h3>
+            <h4>${results.volumeInfo.title} <h6>by</h6> <h5>${author}</h5></h4>
             <p class="book-description">${snippet}</p>
           </div>
         </div>        
@@ -66,7 +66,7 @@ function renderBestSellers(results, thumbnail, ISBN) {
         </div>
         <a href='#${results.book_details[0].primary_isbn13}'>
           <img src="${thumbnail}">  
-        </a>
+        </a>  
         <p class="title">${results.book_details[0].title.toLowerCase()}</p>
       </div>
       <div class="lightbox" id="${results.book_details[0].primary_isbn13}">

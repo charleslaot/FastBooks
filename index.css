@@ -70,6 +70,15 @@ select {
     border-radius: 5px;
 }
 
+.bookListName {
+    height: 25px;
+}
+
+.books {    
+    margin-bottom: 125px;
+    /* margin-top: 50px; */
+}
+
 .bookItem {
     width: 130px;
     height: 200px;
@@ -132,6 +141,13 @@ section {
     text-align: left;
 }
 
+.fa-eye,
+.fa-heart,
+.star-rating,
+.star-rating span {
+    visibility: hidden;
+}
+
 .fa-eye {
     font-size: 16px;
     position: relative;
@@ -178,9 +194,13 @@ section {
     background: rgba(0, 0, 0, 0.8);
 }
 
-.lightbox img {
-    width: 250px;
-    height: 400px;
+.lightbox-content img {    
+    width: 200px;
+    height: 300px;
+}
+
+.lightbox-content img:hover {
+    opacity: 1;
 }
 
 .lightbox:target {
@@ -206,3 +226,4 @@ section {
     position: relative;
     top: 10%;
 }
+

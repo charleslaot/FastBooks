@@ -142,14 +142,11 @@ function displayBestSellerData(name) {
 
 
 function showBestSeller() {	
-	renderEmptyForm();	
-	
-	// create sub containers for each section
-	const sections = ['science', 'business-books'];
+	renderEmptyForm();			
 	sections.forEach(name => {
 		$('.book-container').append(`
         <section class=${name}>
-          <header class="row">${name}</header>
+          <header class="row bookListName">${name}</header>
           <div class="row books"></div>
         </section>
       `);   
