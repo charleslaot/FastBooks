@@ -81,4 +81,4 @@ function showBestSeller() {
 	});
 }
 
-$(showBestSeller);
+// $(showBestSeller);
