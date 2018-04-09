@@ -5,21 +5,29 @@ const GOOGLE_BOOKS_API_URL = "https://www.googleapis.com/books/v1/volumes";
 const NYT_API_URL = "https://api.nytimes.com/svc/books/v3/lists.json?api-key=ecb23c2aa6254b85b8623e1916c960f3";
 
 var searchIndex = 0;
-var query = ''
+var query = '';
+
+const sections = [
+    "business-books",
+    "science",
+    "combined-print-and-e-book-fiction",
+    "combined-print-and-e-book-nonfiction",
+    "sports",
+    "childrens-middle-grade-hardcover",
+    "young-adult-hardcover"
+]
 
 var googleAjaxData = {
     maxResults: 40,
     printType: "books",
     startIndex: searchIndex,
     q: query,
-    key: 'AIzaSyAF1cL0-c1jdrtp4BPwVqaaD374DD5XcNU'
+    key: 'AIzaSyDWsuOWHIZR5JGWfFhtn9oloel8bsNRQR4'
 }
 
 var nyAjaxData = {
     list: ''
 }
-
-
 
 
 // API ajax call
@@ -44,7 +52,7 @@ function checkForItemsReceived(item) {
 }
 
 
-function normalizeData(item) {
+function normalizeSearchData(item) {
     let bookElement = {
         isbn: '',
         snippet: '',
@@ -82,7 +90,7 @@ function normalizeData(item) {
 function displaySearchData(data) {
     if (checkForItemsReceived(data)) {
         const results = data.items.map((item, index) => {
-            let book = normalizeData(item);
+            let book = normalizeSearchData(item);
             return renderBooks(book);
         });
         $('.book-container').append(results);
@@ -158,6 +166,41 @@ function infiniteScroll() {
         }
     });
 };
+
+// RENDER
+
+function renderBooks(book) {
+    return `
+      <div class="book col">
+        <div class="bookItem w3-animate-opacity">
+          <i class="test fa fa-eye fa-lg"></i>        
+          <i class="fa fa-heart fa-lg"></i>   
+          <div class='star-rating'>
+            <i class="fa fa-star"></i>   
+            <i class="fa fa-star"></i>   
+            <i class="fa fa-star"></i>   
+            <i class="fa fa-star"></i>   
+            <i class="fa fa-star-half-full"></i>   
+            <span>4.5/5</span>         
+          </div>            
+          <a href='#${book.id}'>
+            <img src="${book.thumbnail}" alt=${book.title} book cover>                 
+          </a>
+          <p class="title">${book.title}</p>  
+          
+          <div class="lightbox" id="${book.id}">
+            <div class="lightbox-content">
+              <a href="#_" class="fa fa-close fa-2x"></a>
+              <img src="${book.thumbnail}">
+              <h4>${book.title} <h6>by</h6> <h5>${book.author}</h5></h4>
+              <p class="book-description">${book.snippet}</p>
+            </div>
+          </div>        
+        </div>      
+      </div>        
+      `;
+  }
+  
 
 // page on load
 function onLoadTrigger() {
