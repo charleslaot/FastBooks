@@ -227,3 +227,11 @@ section {
     top: 10%;
 }
 
+
+.invalid {
+	border: 3px solid red;
+}
+
+.valid {
+	border: 3px solid green;
+}

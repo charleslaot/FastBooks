@@ -19,11 +19,11 @@ var searchIndex = 0;
 var query = '';
 
 var googleAjaxData = {
-    maxResults: 7,
+    maxResults: 5,
     printType: "books",
     startIndex: searchIndex,
     q: query,
-    key: 'AIzaSyDSiebkur4Smu2DUATQlxKSmL694HfI7Yo'
+    key: 'AIzaSyAsHwxYnlY3l5jV1JfvefLdIM5f4USJlL0'
 }
 
 var nyAjaxData = {
@@ -52,7 +52,7 @@ function checkForItemsReceived(item) {
     }
 }
 
-function normalizeSearchData(item) {
+function normalizeGoogleData(item) {
     let bookElement = {
         isbn: '',
         snippet: '',
@@ -88,27 +88,13 @@ function normalizeSearchData(item) {
 function displaySearchData(data) {
     if (checkForItemsReceived(data)) {
         const results = data.items.map((item, index) => {
-            let book = normalizeSearchData(item);
+            let book = normalizeGoogleData(item);
             return renderBooks(book);
         });
         $('.book-container').append(results);
     }
 }
 
-function infiniteScroll() {
-    var win = $(window);
-    win.scroll(function () {
-        if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
-            query = $('.js-form').find('.search-field').val();
-            googleAjaxData.q = query;
-            if (googleAjaxData.q !== '') {
-                searchIndex += 40;
-                googleAjaxData.startIndex = searchIndex;
-                getBooksFromAPI(GOOGLE_BOOKS_API_URL, googleAjaxData, displaySearchData);
-            }
-        }
-    });
-};
 
 
 function speechRecognition() {
@@ -141,13 +127,45 @@ function startDictation() {
     }
 }
 
-function lightboxScroll() {
+function infiniteScroll() {
+    var win = $(window);
+    win.scroll(function () {
+        if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
+            query = $('.js-form').find('.search-field').val();
+            googleAjaxData.q = query;
+            if (googleAjaxData.q !== '') {
+                searchIndex += 40;
+                googleAjaxData.startIndex = searchIndex;
+                getBooksFromAPI(GOOGLE_BOOKS_API_URL, googleAjaxData, displaySearchData);
+            }
+        }
+    });
+};
+
+function lightboxHandler() {
+
     $('.book-container').on('click', 'img', function (event) {
         $('html').css('overflow', 'hidden');
     })
+
     $('.book-container').on('click', '.fa-close', function (event) {
         $('html').css('overflow', 'visible');
     })
+
+    $(document).keyup(function (e) {
+        if (location.hash !== "#_" && e.keyCode == 27) {            
+            location.hash = "#_";
+            $('html').css('overflow', 'visible');
+        }
+    });
+}
+
+function isSearchFieldEmpty(search) {
+    if (search === '') {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 function initEventHandler() {
@@ -164,14 +182,19 @@ function initEventHandler() {
     $('.js-form').submit(event => {
         event.preventDefault();
         query = $(event.currentTarget).find('.search-field').val();
-        renderEmptyForm();
-        searchIndex = 0;
-        googleAjaxData.q = query;
-        googleAjaxData.startIndex = searchIndex;
-        getBooksFromAPI(GOOGLE_BOOKS_API_URL, googleAjaxData, displaySearchData);
+        if (isSearchFieldEmpty(query)) {
+            $('.search-field').removeClass("valid").addClass("invalid");
+        } else {
+            $('.search-field').removeClass("invalid").addClass("valid");
+            renderEmptyForm();
+            searchIndex = 0;
+            googleAjaxData.q = query;
+            googleAjaxData.startIndex = searchIndex;
+            getBooksFromAPI(GOOGLE_BOOKS_API_URL, googleAjaxData, displaySearchData);
+        }
     });
     infiniteScroll()
-    lightboxScroll();
+    lightboxHandler();
 }
 
 // NYT API
