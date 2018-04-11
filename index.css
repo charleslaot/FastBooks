@@ -206,7 +206,7 @@ section {
 .lightbox:target {
     outline: none;
     display: block;
-    overflow-y: scroll;
+    overflow-y: scroll;            
 }
 
 .fa-close {
