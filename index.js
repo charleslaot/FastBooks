@@ -8,9 +8,9 @@ const NYT_API_URL = "https://api.nytimes.com/svc/books/v3/lists.json?api-key=ecb
 const sections = [
     "business-books",
     "science",
-    // "combined-print-and-e-book-fiction",
-    // "combined-print-and-e-book-nonfiction",
-    // "sports",
+    "combined-print-and-e-book-fiction",
+    "combined-print-and-e-book-nonfiction",
+    "sports",
     // "childrens-middle-grade-hardcover",
     // "young-adult-hardcover"
 ]
@@ -23,7 +23,7 @@ var googleAjaxData = {
     printType: "books",
     startIndex: searchIndex,
     q: query,
-    key: 'AIzaSyAsHwxYnlY3l5jV1JfvefLdIM5f4USJlL0'
+    key: 'AIzaSyAqCF0JzbscjiLW4AxhYEs5ZCBzl0UOeLU'
 }
 
 var nyAjaxData = {
@@ -141,13 +141,29 @@ function startDictation() {
     }
 }
 
-function lightboxScroll() {
-    $('.book-container').on('click', 'img', function (event) {
+function lightboxHandler() {
+    $('.book-container').on('click', 'img', function (event) {        
+        $('.lightbox').css('display', 'block');
         $('html').css('overflow', 'hidden');
+        
     })
     $('.book-container').on('click', '.fa-close', function (event) {
+        $('.lightbox').css('display', 'none');
         $('html').css('overflow', 'visible');
+
     })
+    // $('.book-container').keyup(function (key) {
+    //     if (key.keyCode === 27){
+    //         console.log(key.keyCode);
+    //     }
+    // })
+
+console.log($('.lightbox').attr('display'));
+    $('body').keyup(function(e) {
+        if (($('.lightbox').css('display') === 'block') && (e.keyCode === 27)) { 
+           console.log("ESC pressed");
+        }
+    });
 }
 
 function initEventHandler() {
@@ -171,7 +187,7 @@ function initEventHandler() {
         getBooksFromAPI(GOOGLE_BOOKS_API_URL, googleAjaxData, displaySearchData);
     });
     infiniteScroll()
-    lightboxScroll();
+    lightboxHandler();
 }
 
 // NYT API
@@ -251,19 +267,16 @@ function renderBooks(book) {
                     <i class="fa fa-star"></i>   
                     <i class="fa fa-star-half-full"></i>   
                 <span>4.5/5</span>         
-            </div>            
-            <a href='#${book.id}'>
-                <img src="${book.thumbnail}" alt=${book.title}>                 
-            </a>
+            </div>                        
+            <img src="${book.thumbnail}" alt=${book.title}>                             
             <p class="title">${book.title}</p>  
             
-            <div class="lightbox" id="${book.id}">
-                <div class="lightbox-content">
-                    <a href="#_" class="fa fa-close fa-2x"></a>
-                        <img src="${book.thumbnail}">
-                    <h4>${book.title} <h6>by</h6> <h5>${book.author}</h5></h4>
-                    <p class="book-description">${book.snippet}</p>
-                </div>
+            <div class="lightbox">                
+                <i class="fa fa-close fa-2x"></i>
+                <img src="${book.thumbnail}">
+                <h4>${book.title} <h6>by</h6> <h5>${book.author}</h5></h4>
+                <p class="book-description">${book.snippet}</p>
+                
             </div>        
         </div>      
     </div>        
