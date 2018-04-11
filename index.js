@@ -23,7 +23,7 @@ var googleAjaxData = {
     printType: "books",
     startIndex: searchIndex,
     q: query,
-    key: 'AIzaSyAqCF0JzbscjiLW4AxhYEs5ZCBzl0UOeLU'
+    key: 'AIzaSyDSiebkur4Smu2DUATQlxKSmL694HfI7Yo'
 }
 
 var nyAjaxData = {
@@ -141,29 +141,13 @@ function startDictation() {
     }
 }
 
-function lightboxHandler() {
-    $('.book-container').on('click', 'img', function (event) {        
-        
-        // $('.lightbox').css('display', 'block');
+function lightboxScroll() {
+    $('.book-container').on('click', 'img', function (event) {
         $('html').css('overflow', 'hidden');
-        
     })
     $('.book-container').on('click', '.fa-close', function (event) {
-        $('.lightbox').css('display', 'none');
         $('html').css('overflow', 'visible');
-
     })
-    // $('.book-container').keyup(function (key) {
-    //     if (key.keyCode === 27){
-    //         console.log(key.keyCode);
-    //     }
-    // })
-
-    $('body').keyup(function(e) {
-        if (($('.lightbox').css('display') === 'block') && (e.keyCode === 27)) { 
-           console.log("ESC pressed");
-        }
-    });
 }
 
 function initEventHandler() {
@@ -187,7 +171,7 @@ function initEventHandler() {
         getBooksFromAPI(GOOGLE_BOOKS_API_URL, googleAjaxData, displaySearchData);
     });
     infiniteScroll()
-    lightboxHandler();
+    lightboxScroll();
 }
 
 // NYT API
@@ -267,16 +251,19 @@ function renderBooks(book) {
                     <i class="fa fa-star"></i>   
                     <i class="fa fa-star-half-full"></i>   
                 <span>4.5/5</span>         
-            </div>                        
-            <img src="${book.thumbnail}" alt=${book.title}>                             
+            </div>            
+            <a href='#${book.id}'>
+                <img src="${book.thumbnail}" alt=${book.title}>                 
+            </a>
             <p class="title">${book.title}</p>  
             
-            <div class="lightbox">                
-                <i class="fa fa-close fa-2x"></i>
-                <img src="${book.thumbnail}">
-                <h4>${book.title} <h6>by</h6> <h5>${book.author}</h5></h4>
-                <p class="book-description">${book.snippet}</p>
-                
+            <div class="lightbox" id="${book.id}">
+                <div class="lightbox-content">
+                    <a href="#_" class="fa fa-close fa-2x"></a>
+                        <img src="${book.thumbnail}">
+                    <h4>${book.title} <h6>by</h6> <h5>${book.author}</h5></h4>
+                    <p class="book-description">${book.snippet}</p>
+                </div>
             </div>        
         </div>      
     </div>        

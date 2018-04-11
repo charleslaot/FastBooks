@@ -177,6 +177,11 @@ section {
     color: #434857
 }
 
+.loading-spinner {
+    display: none;
+    text-align: center;
+}
+
 .lightbox {
     display: none;
     position: fixed;
@@ -187,23 +192,22 @@ section {
     top: 0;
     left: 0;
     background: rgba(0, 0, 0, 0.8);
-    overflow-y: scroll;
 }
 
-/* .lightbox-content img {    
+.lightbox-content img {    
     width: 200px;
     height: 300px;
-} */
+}
 
-/* .lightbox-content img:hover {
+.lightbox-content img:hover {
     opacity: 1;
-} */
+}
 
-/* .lightbox:target {
+.lightbox:target {
     outline: none;
     display: block;
     overflow-y: scroll;            
-} */
+}
 
 .fa-close {
     display: block;
@@ -217,8 +221,9 @@ section {
     margin: 45px auto;
     text-indent: 50px;
 }
-/* 
+
 .lightbox-content {
     position: relative;
     top: 10%;
-} */
+}
+
