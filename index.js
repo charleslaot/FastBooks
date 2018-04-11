@@ -143,7 +143,8 @@ function startDictation() {
 
 function lightboxHandler() {
     $('.book-container').on('click', 'img', function (event) {        
-        $('.lightbox').css('display', 'block');
+        
+        // $('.lightbox').css('display', 'block');
         $('html').css('overflow', 'hidden');
         
     })
@@ -158,7 +159,6 @@ function lightboxHandler() {
     //     }
     // })
 
-console.log($('.lightbox').attr('display'));
     $('body').keyup(function(e) {
         if (($('.lightbox').css('display') === 'block') && (e.keyCode === 27)) { 
            console.log("ESC pressed");
