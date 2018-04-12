@@ -29,7 +29,6 @@ const NYTSections = [
     "young-adult-hardcover"
 ]
 
-// GOOGLE API
 function getBooksFromAPI(ajaxData, callback) {
     const settings = {
         url: ajaxData.url,
@@ -42,6 +41,7 @@ function getBooksFromAPI(ajaxData, callback) {
     return $.ajax(settings);
 }
 
+// GOOGLE API
 function checkForItemsReceived(item) {
     if (item.totalItems === 0 || (!(item.items))) {
         return false;
