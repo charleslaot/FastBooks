@@ -4,11 +4,11 @@
 const googleAjaxData = {
     url: "https://www.googleapis.com/books/v1/volumes",
     data: {
-        maxResults: 5,
+        maxResults: 25,
         printType: "books",
         startIndex: 0,
         q: '',
-        key: 'AIzaSyAqCF0JzbscjiLW4AxhYEs5ZCBzl0UOeLU'
+        key: 'AIzaSyAsHwxYnlY3l5jV1JfvefLdIM5f4USJlL0'
     }
 }
 
@@ -21,12 +21,12 @@ const NYTAjaxData = {
 
 const NYTSections = [
     "business-books",
-    // "science",
-    // "combined-print-and-e-book-fiction",
-    // "combined-print-and-e-book-nonfiction",
-    // "sports",
-    // "childrens-middle-grade-hardcover",
-    // "young-adult-hardcover"
+    "science",
+    "combined-print-and-e-book-fiction",
+    "combined-print-and-e-book-nonfiction",
+    "sports",
+    "childrens-middle-grade-hardcover",
+    "young-adult-hardcover"
 ]
 
 // GOOGLE API
@@ -52,17 +52,11 @@ function checkForItemsReceived(item) {
 
 function normalizeGoogleData(item) {
     let bookElement = {
-        isbn: '',
-        snippet: '',
         author: '',
+        snippet: '',
+        id: item.id,
+        title: item.volumeInfo.title,
         thumbnail: 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg'
-    }
-
-    if ((item.volumeInfo.industryIdentifiers) &&
-        (item.volumeInfo.industryIdentifiers[0].type === "ISBN_10")) {
-        bookElement.isbn = item.volumeInfo.industryIdentifiers.find(function (obj) {
-            return obj.type === 'ISBN_10';
-        }).identifier
     }
 
     if (item.volumeInfo.imageLinks) {
@@ -76,9 +70,6 @@ function normalizeGoogleData(item) {
     if (item.volumeInfo.authors) {
         bookElement.author = item.volumeInfo.authors[0];
     }
-
-    bookElement.id = item.id;
-    bookElement.title = item.volumeInfo.title;
 
     return bookElement;
 }
@@ -122,10 +113,10 @@ function infiniteScroll() {
     var win = $(window);
     win.scroll(function () {
         if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
-            let query = $('.js-form').find('.search-field').val();            
+            let query = $('.js-form').find('.search-field').val();
             googleAjaxData.data.q = query;
             if (googleAjaxData.data.q.length > 0) {
-                googleAjaxData.data.startIndex += 40;
+                googleAjaxData.data.startIndex += 20;
                 getBooksFromAPI(googleAjaxData, displaySearchData);
             }
         }
@@ -158,7 +149,7 @@ function isSearchFieldEmpty(search) {
 }
 
 function initEventHandler() {
-    // getBestSeller();
+    getBestSeller();
 
     $(".js-mainHeader").click(event => {
         $("form input").val('');
@@ -217,7 +208,7 @@ function displayBestSellerData(name) {
         Promise.all(
             data.results.map((item, index) => {
                 let isbnSearch = item.book_details[0].primary_isbn13;
-                return getBestSellerData(isbnSearch).then(result => {                    
+                return getBestSellerData(isbnSearch).then(result => {
                     let bestSeller = normalizeNYTData(item, result);
                     return renderBestSellers(bestSeller);
                 });
@@ -244,22 +235,11 @@ function getBestSeller() {
 function renderSearchBooks(book) {
     return `
     <div class="book col">
-        <div class="bookItem w3-animate-opacity">
-                <i class="test fa fa-eye fa-lg"></i>        
-                <i class="fa fa-heart fa-lg"></i>   
-                <div class='star-rating'>
-                    <i class="fa fa-star"></i>   
-                    <i class="fa fa-star"></i>   
-                    <i class="fa fa-star"></i>   
-                    <i class="fa fa-star"></i>   
-                    <i class="fa fa-star-half-full"></i>   
-                <span>4.5/5</span>         
-            </div>            
+        <div class="bookItem w3-animate-opacity">                
             <a href='#${book.id}'>
                 <img src="${book.thumbnail}" alt=${book.title}>                 
             </a>
-            <p class="title">${book.title}</p>  
-            
+            <p class="title">${book.title}</p>              
             <div class="lightbox" id="${book.id}">
                 <div class="lightbox-content">
                     <a href="#_" class="fa fa-close fa-2x"></a>
@@ -276,41 +256,30 @@ function renderSearchBooks(book) {
 function renderBestSellers(book) {
     return `    
     <div class="book col">
-    <div class="bookItem w3-animate-opacity">        
-        <i class="test fa fa-eye fa-lg"></i>        
-        <i class="fa fa-heart fa-lg"></i>   
-        <div class='star-rating'>
-            <i class="fa fa-star"></i>   
-            <i class="fa fa-star"></i>   
-            <i class="fa fa-star"></i>   
-            <i class="fa fa-star"></i>   
-            <i class="fa fa-star-half-full"></i>   
-            <span>4.5/5</span>         
+        <div class="bookItem w3-animate-opacity">                    
+            <a href='#${book.isbn}'>
+                <img src="${book.thumbnail}">  
+            </a>  
+            <p class="title">${book.title.toLowerCase()}</p>
         </div>
-        <a href='#${book.isbn}'>
-            <img src="${book.thumbnail}">  
-        </a>  
-        <p class="title">${book.title.toLowerCase()}</p>
-    </div>
-
-    <div class="lightbox" id="${book.isbn}">
-        <div class="lightbox-content">
-            <a href="#_" class="fa fa-close fa-2x"></a>
-            <img src="${book.thumbnail}">
-            <h3 class="best-seller-lightbox-title">${book.title.toLowerCase()}</h3>
-            <h6>by</h6> 
-            <h5>${book.author}</h5>
-            <p class="book-description">${book.description}</p>
-        </div>
-    </div>  
-</div>     
+        <div class="lightbox" id="${book.isbn}">
+            <div class="lightbox-content">
+                <a href="#_" class="fa fa-close fa-2x"></a>
+                <img src="${book.thumbnail}">
+                <h3 class="best-seller-lightbox-title">${book.title.toLowerCase()}</h3>
+                <h6>by</h6> 
+                <h5>${book.author}</h5>
+                <p class="book-description">${book.description}</p>
+            </div>
+        </div>  
+    </div>     
     `;
 }
 
 function renderBestSellerBaseHTML() {
     NYTSections.forEach(name => {
         $('.book-container').append(`
-            <section class=${name}>
+            <section role="region" class=${name}>
                 <header class="row bookListName">${name}</header>
                 <div class="row books"></div>
             </section>

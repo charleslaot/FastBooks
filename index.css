@@ -29,6 +29,10 @@ select {
     color: white;
 }
 
+section {
+    margin: auto;
+}
+
 .search-field {
     border-radius: 5px;
     height: 40px;
@@ -50,6 +54,12 @@ select {
     padding: 0;
 }
 
+.book img:hover {
+    opacity: 0.6;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
 .book .title {
     font-size: 14px;
     text-transform: capitalize;
@@ -60,21 +70,12 @@ select {
     width: 130px;
 }
 
-.best-seller-lightbox-title {
-    text-transform: capitalize;
-}
-
-.book img:hover {
-    opacity: 0.6;
-    border: 1px solid black;
-    border-radius: 5px;
-}
-
 .bookListName {
     height: 25px;
+    margin-bottom: 25px;
 }
 
-.books {    
+.books {
     margin-bottom: 125px;
     /* margin-top: 50px; */
 }
@@ -89,8 +90,8 @@ select {
     margin: 0 15px;
 }
 
-section {
-    margin: auto;
+.best-seller-lightbox-title {
+    text-transform: capitalize;
 }
 
 .listName {
@@ -141,47 +142,6 @@ section {
     text-align: left;
 }
 
-.fa-eye,
-.fa-heart,
-.star-rating,
-.star-rating span {
-    visibility: hidden;
-}
-
-.fa-eye {
-    font-size: 16px;
-    position: relative;
-    top: 45px;
-    left: 10px;
-    color: #434857
-}
-
-.fa-heart {
-    font-size: 15px;
-    position: relative;
-    top: 45px;
-    left: 80px;
-    color: #434857
-}
-
-.star-rating {
-    font-size: 13px;
-    color: gold;
-    position: relative;
-    top: 195px;
-    left: 7px;
-}
-
-.star-rating span {
-    font-size: 10px;
-    color: #434857
-}
-
-.loading-spinner {
-    display: none;
-    text-align: center;
-}
-
 .lightbox {
     display: none;
     position: fixed;
@@ -194,7 +154,7 @@ section {
     background: rgba(0, 0, 0, 0.8);
 }
 
-.lightbox-content img {    
+.lightbox-content img {
     width: 200px;
     height: 300px;
 }
@@ -206,7 +166,7 @@ section {
 .lightbox:target {
     outline: none;
     display: block;
-    overflow-y: scroll;            
+    overflow-y: scroll;
 }
 
 .fa-close {
@@ -227,11 +187,10 @@ section {
     top: 10%;
 }
 
-
 .invalid {
-	border: 3px solid red;
+    border: 3px solid red;
 }
 
 .valid {
-	border: 3px solid green;
+    border: 3px solid green;
 }
