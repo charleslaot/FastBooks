@@ -7,10 +7,10 @@ const NYT_API_URL = "https://api.nytimes.com/svc/books/v3/lists.json?api-key=ecb
 
 const sections = [
     "business-books",
-    "science",
-    "combined-print-and-e-book-fiction",
-    "combined-print-and-e-book-nonfiction",
-    "sports",
+    // "science",
+    // "combined-print-and-e-book-fiction",
+    // "combined-print-and-e-book-nonfiction",
+    // "sports",
     // "childrens-middle-grade-hardcover",
     // "young-adult-hardcover"
 ]
@@ -23,11 +23,7 @@ var googleAjaxData = {
     printType: "books",
     startIndex: searchIndex,
     q: query,
-    key: 'AIzaSyAsHwxYnlY3l5jV1JfvefLdIM5f4USJlL0'
-}
-
-var nyAjaxData = {
-    list: ''
+    key: 'AIzaSyB9Kgyrt5aB4bt_v2D75Q3jUuHn_8NRMCw'
 }
 
 // GOOGLE API
@@ -153,7 +149,7 @@ function lightboxHandler() {
     })
 
     $(document).keyup(function (e) {
-        if (location.hash !== "#_" && e.keyCode == 27) {            
+        if (location.hash !== "#_" && e.keyCode == 27) {
             location.hash = "#_";
             $('html').css('overflow', 'visible');
         }
@@ -172,7 +168,7 @@ function initEventHandler() {
     $(".js-mainHeader").click(event => {
         $("form input").val('');
         renderEmptyForm();
-        showBestSeller();
+        getBestSeller();
     });
 
     $('.js-searchSubmit').click(event => {
@@ -193,71 +189,72 @@ function initEventHandler() {
             getBooksFromAPI(GOOGLE_BOOKS_API_URL, googleAjaxData, displaySearchData);
         }
     });
-    infiniteScroll()
+
     lightboxHandler();
+    infiniteScroll()
 }
 
 // NYT API
 
-function getBestSellerImage(result) {
-    let thumbnail = 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg';
-    if (result.totalItems > 0 &&
-        result.items[0].volumeInfo.imageLinks) {
-        thumbnail = result.items[0].volumeInfo.imageLinks.thumbnail;
-    }
-    return thumbnail;
-}
-
-function getBestSellerISBN(isbns) {
-    let index = 0;
-    if (isbns.length === 2) {
-        index = 1;
-    }
-    return isbns[index].isbn13;
-}
-
-function getBook(isbn) {
+function getBookData(isbn) {
     googleAjaxData.startIndex = 0;
     googleAjaxData.q = "isbn:" + isbn;
     return getBooksFromAPI(GOOGLE_BOOKS_API_URL, googleAjaxData);
+}
+
+function normalizeNYTData(item) {    
+    var bestSellerBook = {
+        isbn: item.book_details[0].primary_isbn10,
+        isbn13: item.book_details[0].primary_isbn13,
+        title: item.book_details[0].title,
+        author: item.book_details[0].author,
+        description: item.book_details[0].description,
+        thumbnail: 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg'        
+    }
+     
+    return getBookData(bestSellerBook.isbn).then(result => {              
+        if ((result.totalItems > 0) &&
+            (result.items[0].volumeInfo.imageLinks)) {
+            bestSellerBook.thumbnail = result.items[0].volumeInfo.imageLinks.thumbnail;
+        }        
+        return renderBestSellers(bestSellerBook);
+    })    
 }
 
 function displayBestSellerData(name) {
     return function (data) {
         var listName = data.results[0].list_name;
         Promise.all(
-            data.results.map((item, index) => {
-
-                var isbn = getBestSellerISBN(item.isbns);
-                return getBook(isbn).then(result => {
-                    let thumbnail = getBestSellerImage(result);
-                    return renderBestSellers(item, thumbnail, isbn);
-                });
-            })
-        ).then(results => {
+            data.results.map((item, index) => {                                
+                normalizeNYTData(item);              
+            }).then(results => {
             $(`section.${name} header`).html(renderListName(listName));
             $(`section.${name} .books`).html(results);
-        });
+        }));
     };
 }
 
-function showBestSeller() {
+function getBestSeller() {
     renderEmptyForm();
-    sections.forEach(name => {
-        $('.book-container').append(`
-        <section class=${name}>
-          <header class="row bookListName">${name}</header>
-          <div class="row books"></div>
-        </section>
-      `);
-    });
-    sections.reduce((promise, name) => {
-        return promise.then(() => {
-            nyAjaxData.list = name;
-            return getBooksFromAPI(NYT_API_URL, nyAjaxData, displayBestSellerData(nyAjaxData.list));
+    renderBaseHTML();    
+    sections.reduce((promise, name) => {                
+        return promise.then(() => {            
+            return getBooksFromAPI(NYT_API_URL, {list: name}, displayBestSellerData(name));
         });
     }, Promise.resolve()).then(() => {});
 }
+
+function renderBaseHTML() {
+    sections.forEach(name => {
+        $('.book-container').append(`
+            <section class=${name}>
+                <header class="row bookListName">${name}</header>
+                <div class="row books"></div>
+            </section>
+        `);
+    });
+}
+
 
 // RENDER
 
@@ -293,7 +290,7 @@ function renderBooks(book) {
     `;
 }
 
-function renderBestSellers(results, thumbnail, ISBN) {
+function renderBestSellers(book) {
     return `    
     <div class="book col">
     <div class="bookItem w3-animate-opacity">        
@@ -307,18 +304,20 @@ function renderBestSellers(results, thumbnail, ISBN) {
             <i class="fa fa-star-half-full"></i>   
             <span>4.5/5</span>         
         </div>
-        <a href='#${results.book_details[0].primary_isbn13}'>
-            <img src="${thumbnail}">  
+        <a href='#${book.isbn}'>
+            <img src="${book.thumbnail}">  
         </a>  
-        <p class="title">${results.book_details[0].title.toLowerCase()}</p>
+        <p class="title">${book.title.toLowerCase()}</p>
     </div>
 
-    <div class="lightbox" id="${results.book_details[0].primary_isbn13}">
+    <div class="lightbox" id="${book.isbn}">
         <div class="lightbox-content">
             <a href="#_" class="fa fa-close fa-2x"></a>
-            <img src="${thumbnail}">
-            <h3 class="best-seller-lightbox-title">${results.book_details[0].title.toLowerCase()} <h6>by</h6> <h5>${results.book_details[0].author}</h5></h3>
-            <p class="book-description">${results.book_details[0].description}</p>
+            <img src="${book.thumbnail}">
+            <h3 class="best-seller-lightbox-title">${book.title.toLowerCase()}</h3>
+            <h6>by</h6> 
+            <h5>${book.author}</h5>
+            <p class="book-description">${book.description}</p>
         </div>
     </div>  
 </div>     
@@ -342,7 +341,7 @@ function renderEmptyForm() {
 function onLoadTrigger() {
     initEventHandler();
     speechRecognition();
-    // showBestSeller();
+    // getBestSeller();
 }
 
 $(onLoadTrigger());
