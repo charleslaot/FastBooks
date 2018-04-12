@@ -28,6 +28,8 @@ var googleAjaxData = {
 
 // GOOGLE API
 
+
+
 function getBooksFromAPI(api_url, ajaxData, callback) {
     const settings = {
         url: api_url,
@@ -85,7 +87,7 @@ function displaySearchData(data) {
     if (checkForItemsReceived(data)) {
         const results = data.items.map((item, index) => {
             let book = normalizeGoogleData(item);
-            return renderBooks(book);
+            return renderSearchBooks(book);
         });
         $('.book-container').append(results);
     }
@@ -165,6 +167,8 @@ function isSearchFieldEmpty(search) {
 }
 
 function initEventHandler() {
+    // getBestSeller();
+
     $(".js-mainHeader").click(event => {
         $("form input").val('');
         renderEmptyForm();
@@ -195,70 +199,58 @@ function initEventHandler() {
 }
 
 // NYT API
-
-function getBookData(isbn) {
+function getBestSellerData(isbn) {
     googleAjaxData.startIndex = 0;
     googleAjaxData.q = "isbn:" + isbn;
     return getBooksFromAPI(GOOGLE_BOOKS_API_URL, googleAjaxData);
 }
 
-function normalizeNYTData(item) {    
+function normalizeNYTData(NYTItem, googleItem) {    
     var bestSellerBook = {
-        isbn: item.book_details[0].primary_isbn10,
-        isbn13: item.book_details[0].primary_isbn13,
-        title: item.book_details[0].title,
-        author: item.book_details[0].author,
-        description: item.book_details[0].description,
-        thumbnail: 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg'        
-    }
-     
-    return getBookData(bestSellerBook.isbn).then(result => {              
-        if ((result.totalItems > 0) &&
-            (result.items[0].volumeInfo.imageLinks)) {
-            bestSellerBook.thumbnail = result.items[0].volumeInfo.imageLinks.thumbnail;
-        }        
-        return renderBestSellers(bestSellerBook);
-    })    
+        isbn: NYTItem.book_details[0].primary_isbn13,        
+        title: NYTItem.book_details[0].title,
+        author: NYTItem.book_details[0].author,
+        description: NYTItem.book_details[0].description,
+        thumbnail: 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg'               
+    }   
+
+    if (googleItem.totalItems > 0 && googleItem.items[0].volumeInfo.imageLinks) {
+        bestSellerBook.thumbnail = googleItem.items[0].volumeInfo.imageLinks.thumbnail;        
+    } 
+
+    return bestSellerBook;    
 }
 
 function displayBestSellerData(name) {
     return function (data) {
         var listName = data.results[0].list_name;
         Promise.all(
-            data.results.map((item, index) => {                                
-                normalizeNYTData(item);              
-            }).then(results => {
-            $(`section.${name} header`).html(renderListName(listName));
+            data.results.map((item, index) => {
+                let isbnSearch = item.book_details[0].primary_isbn13;
+                return getBestSellerData(isbnSearch).then(result => {                    
+                    let bestSeller = normalizeNYTData(item, result);					
+					return renderBestSellers(bestSeller);
+				});
+			})
+		).then(results => {
+            $(`section.${name} header`).html(renderBestSellerListName(listName));
             $(`section.${name} .books`).html(results);
-        }));
+        });
     };
 }
 
 function getBestSeller() {
     renderEmptyForm();
-    renderBaseHTML();    
+    renderBestSellerBaseHTML();    
     sections.reduce((promise, name) => {                
         return promise.then(() => {            
             return getBooksFromAPI(NYT_API_URL, {list: name}, displayBestSellerData(name));
         });
-    }, Promise.resolve()).then(() => {});
+    }, Promise.resolve())    
 }
-
-function renderBaseHTML() {
-    sections.forEach(name => {
-        $('.book-container').append(`
-            <section class=${name}>
-                <header class="row bookListName">${name}</header>
-                <div class="row books"></div>
-            </section>
-        `);
-    });
-}
-
 
 // RENDER
-
-function renderBooks(book) {
+function renderSearchBooks(book) {
     return `
     <div class="book col">
         <div class="bookItem w3-animate-opacity">
@@ -324,7 +316,18 @@ function renderBestSellers(book) {
     `;
 }
 
-function renderListName(name) {
+function renderBestSellerBaseHTML() {
+    sections.forEach(name => {
+        $('.book-container').append(`
+            <section class=${name}>
+                <header class="row bookListName">${name}</header>
+                <div class="row books"></div>
+            </section>
+        `);
+    });
+}
+
+function renderBestSellerListName(name) {
     return `
     <div class="book col w3-animate-opacity listName">      
         <h5>${name}</h5>                  
@@ -337,11 +340,9 @@ function renderEmptyForm() {
 }
 
 // ON PAGE LOAD
-
 function onLoadTrigger() {
     initEventHandler();
-    speechRecognition();
-    // getBestSeller();
+    speechRecognition();    
 }
 
 $(onLoadTrigger());
