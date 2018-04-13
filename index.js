@@ -4,7 +4,7 @@
 const googleAjaxData = {
     url: "https://www.googleapis.com/books/v1/volumes",
     data: {
-        maxResults: 25,
+        maxResults: 40,
         printType: "books",
         startIndex: 0,
         q: '',
@@ -116,7 +116,7 @@ function infiniteScroll() {
             let query = $('.js-form').find('.search-field').val();
             googleAjaxData.data.q = query;
             if (googleAjaxData.data.q.length > 0) {
-                googleAjaxData.data.startIndex += 20;
+                googleAjaxData.data.startIndex += 40;
                 getBooksFromAPI(googleAjaxData, displaySearchData);
             }
         }
@@ -243,7 +243,7 @@ function renderSearchBooks(book) {
             <div class="lightbox" id="${book.id}">
                 <div class="lightbox-content">
                     <a href="#_" class="fa fa-close fa-2x"></a>
-                        <img src="${book.thumbnail}">
+                        <img src="${book.thumbnail}" alt=${book.title}>
                     <h4>${book.title} <h6>by</h6> <h5>${book.author}</h5></h4>
                     <p class="book-description">${book.snippet}</p>
                 </div>
@@ -258,14 +258,14 @@ function renderBestSellers(book) {
     <div class="book col">
         <div class="bookItem w3-animate-opacity">                    
             <a href='#${book.isbn}'>
-                <img src="${book.thumbnail}">  
+                <img src="${book.thumbnail}" alt=alt=${book.title.toLowerCase()}>  
             </a>  
             <p class="title">${book.title.toLowerCase()}</p>
         </div>
         <div class="lightbox" id="${book.isbn}">
             <div class="lightbox-content">
                 <a href="#_" class="fa fa-close fa-2x"></a>
-                <img src="${book.thumbnail}">
+                <img src="${book.thumbnail}" alt=${book.title.toLowerCase()}>
                 <h3 class="best-seller-lightbox-title">${book.title.toLowerCase()}</h3>
                 <h6>by</h6> 
                 <h5>${book.author}</h5>
