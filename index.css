@@ -14,6 +14,7 @@ img {
     width: 130px;
     height: 200px;
     border-radius: 5px;
+    box-shadow: 4px 4px 40px 0 rgba(0, 0, 0, 0.2), 4px 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 body {
@@ -157,6 +158,7 @@ section {
 .lightbox-content img {
     width: 200px;
     height: 300px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .lightbox-content img:hover {
