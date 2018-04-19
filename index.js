@@ -321,7 +321,6 @@ function renderSearchBook(book) {
     `;
 }
 
-
 function renderBestSellerBaseHTML() {
 	NYTSections.forEach(name => {
 		$('.book-container').append(`
