@@ -2,23 +2,18 @@
 
 const DATA = {
 	index: 0,
-	categories: [
-		// { name: 'Fiction', books: [] },
-	],
-	results: [
-		// { title, .... }
-	],
-	page: null, // search | category
+	categories: [],
+	results: [],
+	page: null
 };
 
-// GLOBALS
 const googleAjaxData = {
 	url: 'https://www.googleapis.com/books/v1/volumes',
 	data: {
-		maxResults: 25,
+		maxResults: 5,
 		printType: 'books',
 		startIndex: 0,
-		key: 'AIzaSyAwzfIiAx2WQcQZcXxdRC3kkscWrLVnbMg',
+		key: 'AIzaSyDcp6QSGxneDMjfJw4dezQ78aiJsMwVCjo',
 	},
 };
 
@@ -33,15 +28,16 @@ const NYTSections = [
 	'business-books',
 	'science',
 	'combined-print-and-e-book-fiction',
-	// 'combined-print-and-e-book-nonfiction',
-	// 'sports',
-	// 'childrens-middle-grade-hardcover',
-	// 'young-adult-hardcover',
+	'combined-print-and-e-book-nonfiction',
+	'sports',
+	'childrens-middle-grade-hardcover',
+	'young-adult-hardcover',
 ];
 
 function emit(eventName, payload) {
 	switch (eventName) {
 		case 'category-search-start':
+			clearSearchResults();
 			DATA.searchingCategories = true;
 			break;
 		case 'success-search':
@@ -54,11 +50,12 @@ function emit(eventName, payload) {
 			DATA.page = 'category';
 			storeCategory(payload.data, payload.category).then(() => {
 				render();
-				DATA.searchCategories = false;
+				DATA.searchingCategories = false;
 			});
 			break;
 		case 'new-search':
 			clearSearchResults();
+			DATA.index = 0;
 			DATA.page = 'search';
 			break;
 	}
@@ -68,7 +65,7 @@ function getBooks(options) {
 	let custom;
 	let apiOptions;
 	let name;
-	if (options.category) {		
+	if (options.category) {
 		name = 'category';
 		apiOptions = NYTAjaxData;
 		custom = {
@@ -101,6 +98,7 @@ function getBooks(options) {
 }
 
 function clearSearchResults() {
+	DATA.categories = [];
 	DATA.results = [];
 }
 
@@ -120,10 +118,9 @@ function normalizeGoogleBook(item) {
 	let bookElement = {
 		author: '',
 		description: '',
-		id: item.id,
+		id: 'item.id',
 		title: item.volumeInfo.title,
 		thumbnail: 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg',
-		isbn: null
 	};
 
 	if (item.volumeInfo.imageLinks) {
@@ -241,7 +238,6 @@ function initEventHandler() {
 	infiniteScroll();
 }
 
-// NYT API
 function storeCategory(data, category) {
 	return normalizeNYTResults(data).then(results => {
 		DATA.categories = DATA.categories.concat([{
@@ -252,8 +248,9 @@ function storeCategory(data, category) {
 }
 
 function normalizeNYTResults(data) {
+	DATA.index = 0;
 	return Promise.all(data.results.map((item, index) => {
-		let isbnSearch = item.book_details[0].primary_isbn13;
+		let isbnSearch = item.book_details[0].primary_isbn10;
 		return getBooks({
 			search: `isbn:${isbnSearch}`
 		}).then(result => {
@@ -264,16 +261,15 @@ function normalizeNYTResults(data) {
 
 function normalizeNYTBook(NYTItem, googleItem) {
 	var bestSellerBook = {
-		isbn: NYTItem.book_details[0].primary_isbn13,
+		isbn: NYTItem.book_details[0].primary_isbn10,
 		title: NYTItem.book_details[0].title,
 		author: NYTItem.book_details[0].author,
 		description: NYTItem.book_details[0].description,
 		thumbnail: 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg',
-	};	
+	};
 
 	if ((googleItem.totalItems > 0) && (googleItem.items[0].volumeInfo.imageLinks)) {
-		bestSellerBook.thumbnail =
-			googleItem.items[0].volumeInfo.imageLinks.thumbnail;
+		bestSellerBook.thumbnail = googleItem.items[0].volumeInfo.imageLinks.thumbnail;
 	}
 
 	return bestSellerBook;
@@ -288,7 +284,6 @@ function getBestSeller() {
 	})
 }
 
-// RENDER
 function renderSearchBook(book) {
 	return `
     <div class="book col">
@@ -330,7 +325,6 @@ function render() {
 	}
 }
 
-// ON PAGE LOAD
 function onLoadTrigger() {
 	initEventHandler();
 	speechRecognition();
