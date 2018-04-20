@@ -32,7 +32,7 @@ const NYTAjaxData = {
 const NYTSections = [
 	'business-books',
 	'science',
-	// 'combined-print-and-e-book-fiction',
+	'combined-print-and-e-book-fiction',
 	// 'combined-print-and-e-book-nonfiction',
 	// 'sports',
 	// 'childrens-middle-grade-hardcover',
@@ -51,6 +51,7 @@ function emit(eventName, payload) {
 			}
 			break;
 		case 'success-category':
+			DATA.page = 'category';
 			storeCategory(payload.data, payload.category).then(() => {
 				render();
 				DATA.searchCategories = false;
@@ -58,16 +59,16 @@ function emit(eventName, payload) {
 			break;
 		case 'new-search':
 			clearSearchResults();
+			DATA.page = 'search';
 			break;
 	}
 }
 
-function getBooks(options, success) {
+function getBooks(options) {
 	let custom;
 	let apiOptions;
 	let name;
-	if (options.category) {
-		emit('category-search-start');
+	if (options.category) {		
 		name = 'category';
 		apiOptions = NYTAjaxData;
 		custom = {
@@ -82,7 +83,7 @@ function getBooks(options, success) {
 		};
 	}
 
-	$.ajax(
+	return $.ajax(
 		Object.assign({
 				dataType: 'json',
 				success: data => {
@@ -212,11 +213,13 @@ function initEventHandler() {
 	// getBestSeller();
 
 	$('.js-mainHeader').click(event => {
+		event.preventDefault();
 		$('form input').val('');
 		getBestSeller();
 	});
 
 	$('.js-searchSubmit').click(event => {
+		event.preventDefault();
 		$('.js-form').submit();
 	});
 
@@ -231,7 +234,6 @@ function initEventHandler() {
 			getBooks({
 				search: query
 			});
-
 		}
 	});
 
@@ -242,18 +244,18 @@ function initEventHandler() {
 // NYT API
 function storeCategory(data, category) {
 	return normalizeNYTResults(data).then(results => {
-		DATA.categories.append({
-			category: category,
+		DATA.categories = DATA.categories.concat([{
+			name: category.replace(/-/g, ' '),
 			results: results
-		});
+		}]);
 	});
 }
 
 function normalizeNYTResults(data) {
 	return Promise.all(data.results.map((item, index) => {
-		let isbnSearch = item.book_details[0].primary_isbn13;		
+		let isbnSearch = item.book_details[0].primary_isbn13;
 		return getBooks({
-			search: `isbn:{isbnSearch}`
+			search: `isbn:${isbnSearch}`
 		}).then(result => {
 			return normalizeNYTBook(item, result);
 		});
@@ -267,19 +269,14 @@ function normalizeNYTBook(NYTItem, googleItem) {
 		author: NYTItem.book_details[0].author,
 		description: NYTItem.book_details[0].description,
 		thumbnail: 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg',
-	};
+	};	
 
-	if (googleItem.totalItems > 0 && googleItem.items[0].volumeInfo.imageLinks) {
+	if ((googleItem.totalItems > 0) && (googleItem.items[0].volumeInfo.imageLinks)) {
 		bestSellerBook.thumbnail =
 			googleItem.items[0].volumeInfo.imageLinks.thumbnail;
 	}
 
 	return bestSellerBook;
-}
-
-function displayBestSellerData(name, results) {
-	$(`section.${name} header`).html(renderBestSellerListName(listName));
-	$(`section.${name} .books`).html(results.map(renderBestSellers));
 }
 
 function getBestSeller() {
@@ -291,14 +288,6 @@ function getBestSeller() {
 	})
 }
 
-// 	renderBestSellerBaseHTML();
-// 	NYTSections.reduce((promise, name) => {
-// 		return promise.then(() => {
-// 			NYTAjaxData.data.list = name;
-// 			return getBooksFromAPI(NYTAjaxData, displayBestSellerData(name));
-// 		});
-// 	}, Promise.resolve());
-
 // RENDER
 function renderSearchBook(book) {
 	return `
@@ -307,7 +296,7 @@ function renderSearchBook(book) {
             <a href='#${book.id || book.isbn}'>
                 <img src="${book.thumbnail}" alt=${book.title}>                 
             </a>
-            <p class="title">${book.title}</p>              
+            <p class="title">${book.title.toLowerCase()}</p>              
             <div class="lightbox" id="${book.id || book.isbn}">
                 <div class="lightbox-content">
                     <a href="#_" class="fa fa-close fa-2x"></a>
@@ -321,32 +310,24 @@ function renderSearchBook(book) {
     `;
 }
 
-function renderBestSellerBaseHTML() {
-	NYTSections.forEach(name => {
-		$('.book-container').append(`
-            <section role="region" class=${name}>
-                <header class="row bookListName">${name}</header>
-                <div class="row books"></div>
-            </section>
-        `);
-	});
-}
-
-function renderBestSellerListName(name) {
+function renderCategoryBooks(category) {
+	const books = category.results.map(renderSearchBook);
 	return `
-    <div class="book col w3-animate-opacity listName">      
-        <h5>${name}</h5>                  
-    </div>
+      <section role="region" class=${category.name}>
+          <header class="row bookListName">${category.name}</header>
+          <div class="row books">${books}</div>
+      </section>
     `;
 }
 
 function render() {
-	const results = DATA.results;
-	$('.book-container').html(results.map(renderSearchBook));
-}
-
-function renderEmptyContainer() {
-	$('.book-container').empty();
+	if (DATA.page === 'search') {
+		const results = DATA.results;
+		$('.book-container').html(results.map(renderSearchBook));
+	} else if (DATA.page === 'category') {
+		const results = DATA.categories;
+		$('.book-container').html(results.map(renderCategoryBooks));
+	}
 }
 
 // ON PAGE LOAD
