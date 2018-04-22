@@ -74,12 +74,11 @@ section {
 .bookListName {
     height: 25px;
     margin-bottom: 25px;
-    text-transform: capitalize;    
+    text-transform: capitalize;
 }
 
 .books {
     margin-bottom: 125px;
-    /* margin-top: 50px; */
 }
 
 .bookItem {

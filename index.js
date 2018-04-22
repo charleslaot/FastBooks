@@ -13,7 +13,7 @@ const googleAjaxData = {
 		maxResults: 5,
 		printType: 'books',
 		startIndex: 0,
-		key: 'AIzaSyDcp6QSGxneDMjfJw4dezQ78aiJsMwVCjo',
+		key: 'AIzaSyAsHwxYnlY3l5jV1JfvefLdIM5f4USJlL0',
 	},
 };
 
@@ -103,6 +103,11 @@ function clearSearchResults() {
 }
 
 function storeResults(data) {
+	for (let e in data) {
+		if (data['totalItems'] === 0) {
+			data['items'] = [];
+		}
+	}
 	DATA.results = DATA.results.concat(normalizeGoogleResults(data));
 }
 
@@ -207,7 +212,7 @@ function isSearchFieldEmpty(search) {
 }
 
 function initEventHandler() {
-	// getBestSeller();
+	getBestSeller();
 
 	$('.js-mainHeader').click(event => {
 		event.preventDefault();
@@ -288,11 +293,11 @@ function renderSearchBook(book) {
 	return `
     <div class="book col">
         <div class="bookItem w3-animate-opacity">                
-            <a href='#${book.id || book.isbn}'>
+            <a href='#${book.id}'>
                 <img src="${book.thumbnail}" alt=${book.title}>                 
             </a>
             <p class="title">${book.title.toLowerCase()}</p>              
-            <div class="lightbox" id="${book.id || book.isbn}">
+            <div class="lightbox" id="${book.id}">
                 <div class="lightbox-content">
                     <a href="#_" class="fa fa-close fa-2x"></a>
                         <img src="${book.thumbnail}">
@@ -300,13 +305,13 @@ function renderSearchBook(book) {
                     <p class="book-description">${book.description}</p>
                 </div>
             </div>        
-        </div>      
+        </div>       
     </div>        
     `;
 }
 
 function renderCategoryBooks(category) {
-	const books = category.results.map(renderSearchBook);
+	const books = category.results.map(renderSearchBook).join('');
 	return `
       <section role="region" class=${category.name}>
           <header class="row bookListName">${category.name}</header>
