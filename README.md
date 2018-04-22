@@ -22,4 +22,4 @@ https://krloslao.github.io/MrBooks/
 
 ## Screenshot
 
-(screenshots/screen1.PNG)
+![screenshot](screenshots/screen1.PNG)
