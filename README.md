@@ -2,9 +2,9 @@
 
 MrBooks is the ultimate search tool for books. It provides with the list of the current Best Seller books in the market and also allows to search books across the web with the Google Search Engine and Voice Speech Dictation.
 
-## Live Demo
+## Demo
 
-![MrBooks](https://krloslao.github.io/MrBooks)
+![Live Demo](https://krloslao.github.io/MrBooks/)
 
 ## Technologies Used 
 
