@@ -4,7 +4,7 @@ MrBooks is the ultimate search tool for books. It provides with the list of the 
 
 ## Live Demo
 
-https://krloslao.github.io/MrBooks/
+![MrBooks](https://krloslao.github.io/MrBooks)
 
 ## Technologies Used 
 
