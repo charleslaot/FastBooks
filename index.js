@@ -177,7 +177,7 @@ function infiniteScroll() {
 		) {
 			let query = $('.js-form').find('.search-field').val();
 			if (query.length > 0) {
-				DATA.index += 25;
+				DATA.index += 40;
 				getBooks({
 					search: query,
 				});
