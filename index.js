@@ -10,7 +10,7 @@ const DATA = {
 const googleAjaxData = {
 	url: 'https://www.googleapis.com/books/v1/volumes',
 	data: {
-		maxResults: 5,
+		maxResults: 40,
 		printType: 'books',
 		startIndex: 0,
 		key: 'AIzaSyAsHwxYnlY3l5jV1JfvefLdIM5f4USJlL0',
