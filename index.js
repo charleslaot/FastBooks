@@ -10,10 +10,10 @@ const DATA = {
 const googleAjaxData = {
 	url: 'https://www.googleapis.com/books/v1/volumes',
 	data: {
-		maxResults: 25,
+		maxResults: 40,
 		printType: 'books',
 		startIndex: 0,
-		key: 'AIzaSyAwzfIiAx2WQcQZcXxdRC3kkscWrLVnbMg',
+		key: 'AIzaSyAsHwxYnlY3l5jV1JfvefLdIM5f4USJlL0',
 	},
 };
 
@@ -212,7 +212,7 @@ function isSearchFieldEmpty(search) {
 }
 
 function initEventHandler() {
-	// getBestSeller();
+	getBestSeller();
 
 	$('.js-mainHeader').click(event => {
 		event.preventDefault();
