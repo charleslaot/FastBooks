@@ -13,7 +13,7 @@ const googleAjaxData = {
 		maxResults: 40,
 		printType: 'books',
 		startIndex: 0,
-		key: 'AIzaSyAsHwxYnlY3l5jV1JfvefLdIM5f4USJlL0',
+		key: 'AIzaSyB9Kgyrt5aB4bt_v2D75Q3jUuHn_8NRMCw',
 	},
 };
 
@@ -123,7 +123,7 @@ function normalizeGoogleBook(item) {
 	let bookElement = {
 		author: '',
 		description: '',
-		id: 'item.id',
+		id: item.id,
 		title: item.volumeInfo.title,
 		thumbnail: 'https://image.ibb.co/bYtXH7/no_cover_en_US.jpg',
 	};
@@ -293,11 +293,11 @@ function renderSearchBook(book) {
 	return `
     <div class="book col">
         <div class="bookItem w3-animate-opacity">                
-            <a href='#${book.id}'>
+            <a href='#${book.id || book.isbn}'>
                 <img src="${book.thumbnail}" alt=${book.title}>                 
             </a>
             <p class="title">${book.title.toLowerCase()}</p>              
-            <div class="lightbox" id="${book.id}">
+            <div class="lightbox" id="${book.id || book.isbn}">
                 <div class="lightbox-content">
                     <a href="#_" class="fa fa-close fa-2x"></a>
                         <img src="${book.thumbnail}">
