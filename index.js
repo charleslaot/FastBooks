@@ -10,7 +10,7 @@ const DATA = {
 const googleAjaxData = {
 	url: 'https://www.googleapis.com/books/v1/volumes',
 	data: {
-		maxResults: 40,
+		maxResults: 20,
 		printType: 'books',
 		startIndex: 0,
 		key: 'AIzaSyAwzfIiAx2WQcQZcXxdRC3kkscWrLVnbMg',
@@ -112,7 +112,7 @@ function storeResults(data) {
 }
 
 function normalizeGoogleResults(data) {
-	const results = data.items.map((item, index) => {
+	const results = data.items.map((item) => {
 		let book = normalizeGoogleBook(item);
 		return book;
 	});
@@ -335,4 +335,4 @@ function onLoadTrigger() {
 	speechRecognition();
 }
 
-$(onLoadTrigger());
+$(onLoadTrigger);
