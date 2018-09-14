@@ -83,7 +83,11 @@ function getBooks(options) {
 	return $.ajax(
 		Object.assign({
 				dataType: 'json',
-				success: data => {
+				success: data => {					
+					if (data.totalItems === 0){						
+						console.log("object");
+						$(".no-books-header").css("display", "block");
+					}
 					emit('success-' + name, {
 						category: custom.list,
 						data: data

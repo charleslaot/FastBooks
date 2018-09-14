@@ -87,6 +87,10 @@ section {
     margin: 0 15px;
 }
 
+.no-books-header {
+    display: none;
+}
+
 .best-seller-lightbox-title {
     text-transform: capitalize;
 }
