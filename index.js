@@ -84,8 +84,7 @@ function getBooks(options) {
 		Object.assign({
 				dataType: 'json',
 				success: data => {					
-					if (data.totalItems === 0){						
-						console.log("object");
+					if (data.totalItems === 0){												
 						$(".no-books-header").css("display", "block");
 					}
 					emit('success-' + name, {
@@ -181,7 +180,7 @@ function infiniteScroll() {
 		) {
 			let query = $('.js-form').find('.search-field').val();
 			if (query.length > 0) {
-				DATA.index += 40;
+				DATA.index += 20;
 				getBooks({
 					search: query,
 				});
