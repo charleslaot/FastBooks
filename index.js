@@ -13,7 +13,7 @@ const googleAjaxData = {
 		maxResults: 20,
 		printType: 'books',
 		startIndex: 0,
-		key: 'AIzaSyAwzfIiAx2WQcQZcXxdRC3kkscWrLVnbMg',
+		key: 'AIzaSyAk-NfrDEAlyIx4DyQvYQ2MxQG1_qC1bNo',
 	},
 };
 
