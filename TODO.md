@@ -1,7 +1,6 @@
 # TODO
 
 - [ ] Search NYT books by 'name' in Google Book API
-- [ ] Redesign front end
 - [ ] Add some animation
 - [ ] Change Google Books API key when reach daily limit
 - [ ] Redesign lightbox

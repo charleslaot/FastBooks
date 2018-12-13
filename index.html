@@ -8,31 +8,26 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
-    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-    <link rel="shortcut icon" href="https://image.ibb.co/hmH2QS/cbii9_s0z4d_0.png" type="image/x-icon">    
+    <link rel="shortcut icon" href="https://image.ibb.co/hmH2QS/cbii9_s0z4d_0.png" type="image/x-icon">        
     <link rel="stylesheet" href="index.css">
     <title>Mr. Books</title>
 </head>
-<body>
-    <div class="container">
-        <div class="row">
-            <header role="banner" class="col-md-6">
-                <h1 class="mainHeader js-mainHeader">Mr. Books</h1>
-                <h6 class="tagLine">Search your favorites books in one place !</h6>
-            </header>
-            <div class="col-md-6 col-sm-12">
-                <form action='submit' class="search-form js-form" multiple=true>                   
-                    <input type="text" class="search-field" placeholder="Search">                    
-                    <i class="fa fa-microphone js-voice-search"></i>
-                    <i class="fa fa-search js-searchSubmit"></i>
-                </form>
-            </div>
-        </div>
-    </div>    
+<body>    
+    <header role="banner" class="">
+        <h1 class="mainHeader js-mainHeader">Mr. Books</h1>
+        <h6 class="tagLine">All your books in one place</h6>
+    </header>    
+    <form action='submit' class="search-form js-form"> 
+        <div class="search-wrapper">            
+            <input type="text" class="search-field" placeholder="Search">                                
+            <i class="fa fa-microphone js-voice-search"></i>                    
+        </div>          
+        <button class="btn btn-primary submit-search-btn">
+            <i class="fa fa-arrow-right"></i>
+        </button>                                        
+    </form>    
     <main role="main" class="container">
-        <div class="book-container row"></div>
-        <h1 class="no-books-header">Nothing Found :(</h1>
+        <div class="book-container row"></div>        
     </main>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous">

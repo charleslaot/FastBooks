@@ -10,12 +10,19 @@ const DATA = {
 const googleAjaxData = {
 	url: 'https://www.googleapis.com/books/v1/volumes',
 	data: {
-		maxResults: 20,
+		maxResults: 40,
 		printType: 'books',
 		startIndex: 0,
-		key: 'AIzaSyBj9B4MSBqvqYJpdGznJKDvbhYP-kZzTkc',
+		key: 'AIzaSyDDFvD6QA8UdX9amBC28t_i6had2HMnxR4',
 	},
 };
+
+// AIzaSyApMsJgVm1xWHs1dNNAJrToIZy0HLunGKE
+// AIzaSyDcp6QSGxneDMjfJw4dezQ78aiJsMwVCjo
+// AIzaSyAsHwxYnlY3l5jV1JfvefLdIM5f4USJlL0
+// AIzaSyAqCF0JzbscjiLW4AxhYEs5ZCBzl0UOeLU
+// AIzaSyDDFvD6QA8UdX9amBC28t_i6had2HMnxR4
+
 
 const NYTAjaxData = {
 	url: 'https://api.nytimes.com/svc/books/v3/lists.json?api-key=ecb23c2aa6254b85b8623e1916c960f3',
@@ -317,7 +324,7 @@ function renderCategoryBooks(category) {
 	const books = category.results.map(renderSearchBook).join('');
 	return `
       <section role="region" class=${category.name}>
-          <header class="row bookListName">${category.name}</header>
+		  <header class="row bookListName">${category.name}</header>		  
           <div class="row books">${books}</div>
       </section>
     `;
