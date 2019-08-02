@@ -17,13 +17,6 @@ const googleAjaxData = {
 	},
 };
 
-// AIzaSyApMsJgVm1xWHs1dNNAJrToIZy0HLunGKE
-// AIzaSyDcp6QSGxneDMjfJw4dezQ78aiJsMwVCjo
-// AIzaSyAsHwxYnlY3l5jV1JfvefLdIM5f4USJlL0
-// AIzaSyAqCF0JzbscjiLW4AxhYEs5ZCBzl0UOeLU
-// AIzaSyDDFvD6QA8UdX9amBC28t_i6had2HMnxR4
-
-
 const NYTAjaxData = {
 	url: 'https://api.nytimes.com/svc/books/v3/lists.json?api-key=ecb23c2aa6254b85b8623e1916c960f3',
 	data: {
