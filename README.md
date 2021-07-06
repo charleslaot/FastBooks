@@ -13,7 +13,7 @@ Mr.Books is the ultimate search tool for books. It provides the list of the curr
 - HTML
 - CSS
 - Bootstrap
-- W3.CSS
+- CSS
 - Font Awesome
 - Google Fonts
 - JavaScript
