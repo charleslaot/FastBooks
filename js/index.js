@@ -43,7 +43,7 @@ const googleAjaxData = {
     maxResults: 40,
     printType: "books",
     startIndex: 0,
-    key: "AIzaSyApMsJgVm1xWHs1dNNAJrToIZy0HLunGKE",
+    key: "AIzaSyAsHwxYnlY3l5jV1JfvefLdIM5f4USJlL0",
   },
 };
 
