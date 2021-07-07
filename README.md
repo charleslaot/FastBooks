@@ -6,7 +6,7 @@ Mr.Books is the ultimate search tool for books. It provides the list of the curr
 
 ## LIVE DEMO
 
-[Mr.Books](https://carlostrujillo90.github.io/MrBooks/)
+[Mr.Books](https://carlostrujillo90.github.io/Mr.Books/)
 
 ## TECHNOLOGIES USED
 
