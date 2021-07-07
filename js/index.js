@@ -43,14 +43,14 @@ const googleAjaxData = {
     maxResults: 40,
     printType: "books",
     startIndex: 0,
-    key: ${{ GOOGLE_API_KEY_1 }},
+    key: ${{ env.GOOGLE_API_KEY_1 }},
   },
 };
 
 const NYTAjaxData = {
   url:
     "https://api.nytimes.com/svc/books/v3/lists.json?api-key=" +
-    ${{ NYT_API_KEY_1 }},
+    ${{ env.NYT_API_KEY_1 }},
   data: {
     list: "",
   },
