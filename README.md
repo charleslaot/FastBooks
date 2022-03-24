@@ -20,4 +20,6 @@ FastBooks is the ultimate search tool for books. It provides the list of the cur
 
 ## SCREENSHOTS
 
-![screenshot](screenshots/screen1.PNG)
+![screenshot](src/ss1.png)
+
+![screenshot](src/ss2.png)
