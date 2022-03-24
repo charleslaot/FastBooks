@@ -41,7 +41,6 @@ function renderNYTCategories(categories) {
 }
 
 function normalizeNYTBook(book) {
-    console.log(book)
     let bookElement = {
         title: "No Title Provided",
         book_image: "https://image.ibb.co/bYtXH7/no_cover_en_US.jpg",

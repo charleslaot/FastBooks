@@ -27,7 +27,6 @@ function getQueryBooks(index = 0) {
     fetch(urlQuery)
         .then((queryBooks) => queryBooks.json())
         .then((queryBooks) => {
-            console.log(queryBooks);
             renderQueryBooks(queryBooks);
             document.getElementById("sub-category").innerHTML = `<h2 class="book-subtitle" id="subtitle">Search for "${searchQuery}"</h2>`;
         })
