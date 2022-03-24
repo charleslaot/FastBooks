@@ -1,39 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://use.fontawesome.com/fbeba145c2.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="shortcut icon" href="https://image.ibb.co/hmH2QS/cbii9_s0z4d_0.png" type="image/x-icon">        
-    <link rel="stylesheet" href="css/index.css">
-    <title>Mr. Books</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://image.ibb.co/hmH2QS/cbii9_s0z4d_0.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Elsie&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./src/style.css">
+    <title>FastBooks</title>
 </head>
-<body>    
-    <header role="banner" class="">
-        <h1 class="mainHeader js-mainHeader">Mr. Books</h1>
-        <h6 class="tagLine">All your books in one place</h6>
-    </header>    
-    <form action='submit' class="search-form js-form"> 
-        <div class="search-wrapper">            
-            <input type="text" class="search-field" placeholder="Search">                                
-            <i class="fa fa-microphone js-voice-search"></i>                    
-        </div>          
-        <button class="btn btn-primary submit-search-btn">
-            <i class="fa fa-arrow-right"></i>
-        </button>                                        
-    </form>    
-    <main role="main" class="container">
-        <div class="book-container row"></div>        
+
+<body class="container">
+    <header class="header">
+        <a href="/">
+            <h1>Fast</h1>
+            <h1>Books</h1>
+        </a>
+        <h3>All your books in one place</h3>
+        <div class="header-form">
+            <form action="submit" method="get" id="search-form">
+                <input type="text" name="search" id="form-input" required>
+                <button type="submit" class="material-icons" id="query-search">search</button>
+            </form>
+            <button class="material-icons" id="voice-search">mic</button>
+        </div>
+    </header>
+    <div id="sub-category">
+        <h2 class="book-subtitle" id="subtitle">New York Times Best Sellers</h2>
+    </div>
+    <main class="main-container">
+        <div class="results-container" id="results"></div>
     </main>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous">
-    </script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>            
-    <script type="module" src="js/index.js"></script>    
+
 </body>
+<script type="module" src="./src/index.js"></script>
+
 </html>

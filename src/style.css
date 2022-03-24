@@ -1,0 +1,173 @@
+.container {
+    display: flex;
+    align-items: center;
+    padding-bottom: 3rem;
+    flex-direction: column;
+    background-color: #fca311;
+}
+
+.header {
+    width: 100%;
+    max-width: 1024px;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.header a {
+    display: flex;
+    flex-wrap: wrap;
+    text-decoration: none;
+    justify-content: center;
+}
+
+.header h1 {
+    color: #14213D;
+    font-size: 3.5em;
+    margin-bottom: 1rem;
+    font-family: 'Monoton', cursive;
+}
+
+.header h3 {
+    color: #14213D;
+    font-size: 1.25em;
+    margin-bottom: 2rem;
+    font-family: 'Elsie', cursive;
+}
+
+.header-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#sub-category {
+    margin: 1rem;
+}
+
+#sub-category h2 {
+    font-family: 'Arial', sans-serif;
+}
+
+#search-form {
+    display: flex;
+    align-items: center;
+}
+
+#form-input {
+    border: 0;
+    width: 16rem;
+    padding: 1rem;
+    margin-right: 12px;
+    border-radius: 2rem;
+    background-color: #FFFFFF;
+}
+
+#form-input:focus {
+    border: 0;
+}
+
+#voice-search {
+    border: 0;
+    width: 35px;
+    height: 40px;
+    right: 6.25rem;
+    cursor: pointer;
+    position: relative;
+    border-radius: 1rem;
+    background-color: transparent;
+}
+
+#query-search {
+    border: 0;
+    padding: 0.6rem;
+    transition: 300ms;
+    border-radius: 16px;
+    background-color: #FFFFFF;
+}
+
+#query-search:hover {
+    cursor: pointer;
+    color: #FFFFFF;
+    background-color: #14213D;
+}
+
+
+.results-container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1024px;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.book-item {
+    width: 8rem;
+    height: auto;
+    padding: 1rem;
+    list-style: none;
+    text-align: center;
+}
+
+.book-item a {
+    text-decoration: none;
+}
+
+.book-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 6px 1px 11px 1px rgba(0,0,0,0.34);
+}
+
+.book-item img:hover {
+    animation: shadow-drop-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.book-item span {
+    color: #14213D;
+    font-size: 0.9em;
+    font-weight: bolder;
+    letter-spacing: -1px;
+    font-family: 'Arial', sans-serif;
+}
+
+.nyt-category-item {
+    border: 0;
+    padding: 1rem;
+    color: #FFFFFF;
+    margin: 0.5rem 0;
+    transition: 300ms;
+    border-radius: 2rem;
+    border: 1px solid #14213D;
+    background-color: #14213D;
+}
+
+.nyt-category-item:hover {
+    cursor: pointer;
+    color: #14213D;
+    background-color: #FFFFFF;
+    border: 1px solid #14213D;
+}
+
+@media only screen and (max-width : 415px) {
+    .header h1 {
+        margin: 0;
+    }
+
+    .header-form {
+        justify-content: end;
+    }
+
+    #form-input {
+        width: 12rem;
+        margin-right: 4px;
+    }
+}
+
+@keyframes shadow-drop-center {
+    0% {
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+    100% {
+      box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+    }
+  }
