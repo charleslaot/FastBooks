@@ -1,9 +1,9 @@
 "use strict";
 
-const NYT_BOOKS_API_KEY = process.env.NYT_BOOKS_API_KEY;
+const NYT_BOOKS_API_KEY = "ecb23c2aa6254b85b8623e1916c960f3";
 const NYT_BOOKS_API_QUERY = "https://api.nytimes.com/svc/books/v3";
 
-const GOOGLE_BOOKS_API_KEY = process.env.GOOGLE_BOOKS_API_KEY;
+const GOOGLE_BOOKS_API_KEY = "AIzaSyAU6aYgWmv2oDmh5MpOkbsh7jP9xgcRZ1c";
 const GOOGLE_BOOKS_API_QUERY = "https://www.googleapis.com/books/v1/volumes?q=";
 
 const queryBooksOptions = { startIndex: 0, maxResults: 40, printType: "books" }
