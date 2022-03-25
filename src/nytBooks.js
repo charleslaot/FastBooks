@@ -1,6 +1,6 @@
 "use strict";
 
-const NYT_BOOKS_API_KEY = "ecb23c2aa6254b85b8623e1916c960f3";
+const NYT_BOOKS_API_KEY = process.env.NYT_BOOKS_API_KEY;
 const NYT_BOOKS_API_QUERY = "https://api.nytimes.com/svc/books/v3";
 
 function getNYTCategories() {

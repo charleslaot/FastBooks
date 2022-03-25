@@ -1,6 +1,6 @@
 "use strict";
 
-const GOOGLE_BOOKS_API_KEY = "AIzaSyAU6aYgWmv2oDmh5MpOkbsh7jP9xgcRZ1c";
+const GOOGLE_BOOKS_API_KEY = process.env.GOOGLE_BOOKS_API_KEY;
 const GOOGLE_BOOKS_API_QUERY = "https://www.googleapis.com/books/v1/volumes?q=";
 
 const queryBooksOptions = {
