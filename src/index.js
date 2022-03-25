@@ -8,17 +8,15 @@ const GOOGLE_BOOKS_API_QUERY = "https://www.googleapis.com/books/v1/volumes?q=";
 
 const queryBooksOptions = { startIndex: 0, maxResults: 40, printType: "books" }
 
-(function onPageLoad() {
-    getNYTCategories();
+getNYTCategories();
 
+(function() {
     document.getElementById("search-form").addEventListener("submit", function (e) { e.preventDefault() }, false);
-
     document.getElementById("voice-search").addEventListener("click", function () {
         clearResultsHTML();
         getVoiceBooks();
         infiniteScroll();
     }, false);
-
     document.getElementById("query-search").addEventListener("click", function () {
         clearResultsHTML();
         getQueryBooks();
