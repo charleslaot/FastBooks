@@ -6,7 +6,7 @@ FastBooks is the ultimate search tool for books. It provides the list of the cur
 
 ## LIVE DEMO
 
-[FastBooks](https://carlostrujillo90.github.io/FastBooks/)
+[FastBooks](https://fastbooks.netlify.app)
 
 ## TECHNOLOGIES USED
 
