@@ -2,7 +2,7 @@
 
 ## Summary
 
-FastBooks is the ultimate search tool for books. It provides the list of the current NYT Best Seller books in the market and also allows to search books across the web with the Google Books API.
+FastBooks is the ultimate search tool for books. It provides the list of the current New York Times Best Seller books in the market and also allows to search books across the web with the Google Books API.
 
 ## Live Demo
 
