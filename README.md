@@ -1,14 +1,14 @@
 # FastBooks
 
-## SUMMARY
+## Summary
 
 FastBooks is the ultimate search tool for books. It provides the list of the current NYT Best Seller books in the market and also allows to search books across the web with the Google Books API.
 
-## LIVE DEMO
+## Live Demo
 
 [FastBooks](https://fastbooks.netlify.app)
 
-## TECHNOLOGIES USED
+## Technologies Used
 
 - HTML
 - CSS
@@ -18,7 +18,7 @@ FastBooks is the ultimate search tool for books. It provides the list of the cur
 - Google Speech-To-Text API
 - New York Times API
 
-## SCREENSHOTS
+## Screenshots
 
 ![screenshot](src/ss1.png)
 
